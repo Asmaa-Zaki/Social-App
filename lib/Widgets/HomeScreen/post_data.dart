@@ -16,10 +16,13 @@ class PostData extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(
               left: 8.0, right: 8.0, top: 8.0),
-          child: Text(
-            list[index].text!,
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, height: 1.5),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              list[index].text!,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, height: 1.5),
+            ),
           ),
         ),
         if(list[index].postImage != null)
