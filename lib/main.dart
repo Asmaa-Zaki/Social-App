@@ -5,6 +5,7 @@ import 'package:social_app/ViewModels/Bloc/UserCubit/user_cubit.dart';
 import 'package:social_app/ViewModels/Bloc/UserCubit/user_states.dart';
 
 import 'ViewModels/Bloc/BlocObserver/BlocObserver.dart';
+import 'ViewModels/Bloc/ChatCubit/chat_cubit.dart';
 import 'ViewModels/Bloc/PostCubit/post_cubit.dart';
 import 'ViewModels/Bloc/PostCubit/post_states.dart';
 import 'ViewModels/Constants/constants.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
     }
     return MultiBlocProvider(
         providers: [
+          BlocProvider<ChatCubit>(create: (context) => ChatCubit()),
           BlocProvider<PostCubit>(create: (context) => PostCubit()..getPosts()),
           BlocProvider<UserCubit>(
               create: (context) => UserCubit()
@@ -50,7 +52,11 @@ class MyApp extends StatelessWidget {
                   return MaterialApp(
                     debugShowCheckedModeBanner: false,
                     home: currentWidget,
-                    theme: ThemeData(primarySwatch: Colors.blue),
+                    theme: ThemeData(
+                        primarySwatch: Colors.blueGrey,
+                        primaryColor: Colors.blueGrey.shade900,
+                        appBarTheme: AppBarTheme(
+                            backgroundColor: Colors.blueGrey.shade900)),
                   );
                 },
                 listener: (context, state) {});

@@ -29,6 +29,7 @@ class AppUsers extends StatelessWidget {
                         CircleAvatar(
                           backgroundImage: NetworkImage(users[index].image),
                         ),
+                        const SizedBox(width: 10,),
                         Text(users[index].name, style: const TextStyle(fontWeight: FontWeight.bold),)
                       ],
                     ),

@@ -23,8 +23,6 @@ class PostCubit extends Cubit<PostAppStates> {
     if (pickedFile != null) {
       postImage = File(pickedFile.path);
       emit(PostGetImageState());
-    } else {
-     // print("U didn't choose anything");
     }
   }
 

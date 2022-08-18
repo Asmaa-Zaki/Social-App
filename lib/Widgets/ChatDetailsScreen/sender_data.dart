@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/Models/UserModel/user_model.dart';
 
-class SenderData extends StatelessWidget {
+class ReceiverData extends StatelessWidget {
   final UserModel currentUser;
-  const SenderData(this.currentUser, {Key? key}) : super(key: key);
+  const ReceiverData(this.currentUser, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -45,12 +45,11 @@ class PostAddPhoto extends StatelessWidget {
                   Icon(
                     Icons.add_photo_alternate_outlined,
                     size: 16,
-                    color: Colors.blue,
                   ),
                   Text(
                     " Add Photo",
                     style:
-                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                    TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
               ),
