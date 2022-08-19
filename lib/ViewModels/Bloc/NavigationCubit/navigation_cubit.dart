@@ -29,7 +29,7 @@ class NavigationCubit extends Cubit<NavigationState> {
   List<BottomNavigationBarItem> items = const [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
     //BottomNavigationBarItem(icon: Icon(Icons.chat), label: "Chats"),
-   // BottomNavigationBarItem(icon: Icon(Icons.add), label: "Posts"),
+    // BottomNavigationBarItem(icon: Icon(Icons.add), label: "Posts"),
     //BottomNavigationBarItem(icon: Icon(Icons.person), label: "Users"),
     BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Settings"),
   ];
@@ -38,8 +38,8 @@ class NavigationCubit extends Cubit<NavigationState> {
     /*if (current == 1) {
      // buildPush(context, const PostsScreen());
     } else {*/
-      currentIndex = current;
-   // }
+    currentIndex = current;
+    // }
     emit(NavigationChange());
   }
 }

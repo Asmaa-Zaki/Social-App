@@ -13,11 +13,9 @@ class PostBody extends StatelessWidget {
         TextFormField(
           controller: textController,
           decoration: const InputDecoration(
-              hintText: "What is in your Mind!",
-              border: InputBorder.none),
+              hintText: "What is in your Mind!", border: InputBorder.none),
           maxLines: 10,
         ),
-
       ],
     );
   }

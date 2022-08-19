@@ -5,21 +5,19 @@ class UserData extends StatelessWidget {
   final UserModel user;
   final String dateTime;
 
-  const UserData({Key? key, required this.user, required this.dateTime}) : super(key: key);
+  const UserData({Key? key, required this.user, required this.dateTime})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: CircleAvatar(
-          radius: 30,
-          backgroundImage:
-          NetworkImage(user.image)),
+      leading:
+          CircleAvatar(radius: 30, backgroundImage: NetworkImage(user.image)),
       title: Row(
         children: [
           Text(
             user.name,
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 18),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           const SizedBox(
             width: 5,

@@ -15,17 +15,15 @@ class PostActions extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              PostCubit.get(context).likePost(
-                  PostCubit.get(context).postsId[index]);
+              PostCubit.get(context)
+                  .likePost(PostCubit.get(context).postsId[index]);
             },
             child: Row(
               children: [
                 const Icon(
                   Icons.favorite_outline,
                 ),
-                Text(PostCubit.get(context)
-                    .likes[index]
-                    .toString()+" Likes")
+                Text(PostCubit.get(context).likes[index].toString() + " Likes")
               ],
             ),
           ),

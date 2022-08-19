@@ -8,29 +8,35 @@ import '../../Views/ChatsDetails/chats_details.dart';
 class AppUsers extends StatelessWidget {
   const AppUsers({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-      return BlocConsumer<UserCubit, UserStates>(
+    return BlocConsumer<UserCubit, UserStates>(
         builder: (context, state) {
-          var users= UserCubit.get(context).users;
+          var users = UserCubit.get(context).users;
           return ListView.separated(
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context)=> ChatsDetails(users[index])
-                      ));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ChatsDetails(users[index])));
                     },
                     child: Row(
                       children: [
                         CircleAvatar(
                           backgroundImage: NetworkImage(users[index].image),
                         ),
-                        const SizedBox(width: 10,),
-                        Text(users[index].name, style: const TextStyle(fontWeight: FontWeight.bold),)
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          users[index].name,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        )
                       ],
                     ),
                   ),
@@ -44,7 +50,6 @@ class AppUsers extends StatelessWidget {
               },
               itemCount: users.length);
         },
-      listener: (context, state){}
-    );
+        listener: (context, state) {});
   }
 }

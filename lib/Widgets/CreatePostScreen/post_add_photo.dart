@@ -10,7 +10,7 @@ class PostAddPhoto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PostCubit, PostAppStates>(
-      builder: (context, state){
+      builder: (context, state) {
         return Column(
           children: [
             if (PostCubit.get(context).postImage != null)
@@ -48,8 +48,7 @@ class PostAddPhoto extends StatelessWidget {
                   ),
                   Text(
                     " Add Photo",
-                    style:
-                    TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
               ),
@@ -57,7 +56,7 @@ class PostAddPhoto extends StatelessWidget {
           ],
         );
       },
-      listener: (context, state){},
+      listener: (context, state) {},
     );
   }
 }

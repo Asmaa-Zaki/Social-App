@@ -8,7 +8,7 @@ class ProfileUpdateAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.all(15.0),
       child: InkWell(
           onTap: () {
@@ -22,8 +22,7 @@ class ProfileUpdateAction extends StatelessWidget {
               ),
               Text(
                 "Update Profile",
-                style:
-                TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               ),
               Spacer(),
               Icon(Icons.arrow_forward_ios),

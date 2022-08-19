@@ -12,7 +12,9 @@ class SendAction extends StatelessWidget {
   final bool image;
   final TextEditingController messageController;
 
-  const SendAction(this.receiver, this.image, this.messageController, {Key? key}) : super(key: key);
+  const SendAction(this.receiver, this.image, this.messageController,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +31,18 @@ class SendAction extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                    onPressed: () {
-                      //   EmojiPicker();
-                    },
-                    icon: const Icon(Icons.emoji_emotions), color: Colors.white,),
+                  onPressed: () {
+                    //   EmojiPicker();
+                  },
+                  icon: const Icon(Icons.emoji_emotions),
+                  color: Colors.white,
+                ),
                 Expanded(
                   child: TextFormField(
                     style: const TextStyle(color: Colors.white),
                     cursorColor: Colors.white,
-                    decoration:  const InputDecoration(
-                        hintStyle: TextStyle(
-                            color: Colors.white
-                        ),
+                    decoration: const InputDecoration(
+                        hintStyle: TextStyle(color: Colors.white),
                         hintText: "Type Message",
                         border: InputBorder.none),
                     controller: messageController,
@@ -52,7 +54,10 @@ class SendAction extends StatelessWidget {
                 ),
                 if (image != true)
                   IconButton(
-                    icon: const Icon(Icons.image, color: Colors.white,),
+                    icon: const Icon(
+                      Icons.image,
+                      color: Colors.white,
+                    ),
                     onPressed: () {
                       ChatCubit.get(context).openGallery();
                     },
@@ -61,7 +66,9 @@ class SendAction extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 7,),
+        const SizedBox(
+          width: 7,
+        ),
         Expanded(
           flex: 2,
           child: BlocConsumer<ChatCubit, ChatStates>(builder: (context, state) {
@@ -76,19 +83,21 @@ class SendAction extends StatelessWidget {
                 icon: messageController.text.isNotEmpty || image == true
                     ? const Icon(Icons.send, color: Colors.white)
                     : const Icon(Icons.keyboard_voice, color: Colors.white),
-                onPressed: messageController.text.isNotEmpty || image == true? () {
-                  ChatCubit.get(context).sendMessage(
-                    message: messageController.text.isNotEmpty
-                        ? messageController.text
-                        : null,
-                    receiverId: receiver.uId,
-                    dateTime: DateTime.now().toString(),
-                  );
-                  messageController.text = "";
-                  if (image == true) {
-                    Navigator.pop(context);
-                  }
-                }: (){},
+                onPressed: messageController.text.isNotEmpty || image == true
+                    ? () {
+                        ChatCubit.get(context).sendMessage(
+                          message: messageController.text.isNotEmpty
+                              ? messageController.text
+                              : null,
+                          receiverId: receiver.uId,
+                          dateTime: DateTime.now().toString(),
+                        );
+                        messageController.text = "";
+                        if (image == true) {
+                          Navigator.pop(context);
+                        }
+                      }
+                    : () {},
               ),
             );
           }, listener: (context, state) {

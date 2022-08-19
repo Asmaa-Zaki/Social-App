@@ -9,6 +9,7 @@ class BuildTextFormField extends StatelessWidget {
   final bool? obscureText;
   final String? placeholder;
   final String? Function(String?)? validate;
+  final Function()? showPassword;
 
   const BuildTextFormField(
       {Key? key,
@@ -19,7 +20,8 @@ class BuildTextFormField extends StatelessWidget {
       this.keyboard,
       this.obscureText,
       this.placeholder,
-      this.validate})
+      this.validate,
+      this.showPassword})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -31,12 +33,14 @@ class BuildTextFormField extends StatelessWidget {
           keyboardType: keyboard,
           obscureText: obscureText ?? false,
           decoration: InputDecoration(
-              hintText: placeholder,
-              label: Text(label!),
-              prefixIcon: Icon(preFix),
-              suffixIcon: Icon(postFix),
-              border: const OutlineInputBorder(borderSide: BorderSide()),
-              isDense: true),
+            hintText: placeholder,
+            label: Text(label!),
+            prefixIcon: preFix == null ? null : Icon(preFix),
+            suffixIcon: InkWell(
+              child: Icon(postFix),
+              onTap: showPassword,
+            ),
+          ),
         )
       ],
     );

@@ -22,11 +22,12 @@ class PostScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Create Post"),
           actions: [
-            if(state is !PostUploadImageLoadingState || state is !PostCreateLoadingState)
-            CreatePostButton(
-              textController: textController,
-              now: now,
-            )
+            if (state is! PostUploadImageLoadingState ||
+                state is! PostCreateLoadingState)
+              CreatePostButton(
+                textController: textController,
+                now: now,
+              )
           ],
         ),
         body: Padding(

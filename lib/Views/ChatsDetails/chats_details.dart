@@ -13,37 +13,35 @@ class ChatsDetails extends StatelessWidget {
   final UserModel receiver;
   ChatsDetails(this.receiver, {Key? key}) : super(key: key);
 
-  final messageController= TextEditingController();
+  final messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-          ChatCubit.get(context).getMessages(receiver.uId);
-          return Scaffold(
-            appBar: AppBar(
-              title: ReceiverData(receiver),
-            ),
-            body: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2),
-              child: Column(
-                children: [
-                  BlocConsumer<ChatCubit, ChatStates>(
-                    builder: (context, state) {
-                      List<MessageModel> messages =
-                          ChatCubit.get(context).messages;
-                      messages = messages.reversed.toList();
-                      return MessagesList(receiver, messages);
-                    },
-                    listener: (context, state) {},
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SendAction(receiver, false, messageController)
-                ],
+      ChatCubit.get(context).getMessages(receiver.uId);
+      return Scaffold(
+        appBar: AppBar(
+          title: ReceiverData(receiver),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2),
+          child: Column(
+            children: [
+              BlocConsumer<ChatCubit, ChatStates>(
+                builder: (context, state) {
+                  List<MessageModel> messages = ChatCubit.get(context).messages;
+                  messages = messages.reversed.toList();
+                  return MessagesList(receiver, messages);
+                },
+                listener: (context, state) {},
               ),
-            ),
-          );
-        });
+              const SizedBox(
+                height: 10,
+              ),
+              SendAction(receiver, false, messageController)
+            ],
+          ),
+        ),
+      );
+    });
   }
 }

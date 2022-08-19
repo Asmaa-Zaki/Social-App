@@ -22,14 +22,14 @@ class ProfileDataUpdate extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 15),
             child: EditUserFormData(
                 nameController, dioController, phoneController)),
-          ElevatedButton(
-              onPressed: () {
-                UserCubit.get(context).updateProfileData(
-                    name: nameController.text,
-                    phone: phoneController.text,
-                    dio: dioController.text);
-              },
-              child: const Text("Update"))
+        ElevatedButton(
+            onPressed: () {
+              UserCubit.get(context).updateProfileData(
+                  name: nameController.text,
+                  phone: phoneController.text,
+                  dio: dioController.text);
+            },
+            child: const Text("Update"))
       ],
     );
   }

@@ -12,12 +12,12 @@ class LayoutAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BlocConsumer<NavigationCubit, NavigationState>(
-      builder: (context, state){
+    return BlocConsumer<NavigationCubit, NavigationState>(
+      builder: (context, state) {
         return SafeArea(
           child: Column(
             children: [
-              if(NavigationCubit.get(context).currentIndex != 1)
+              if (NavigationCubit.get(context).currentIndex != 1)
                 SizedBox(
                     height: 50,
                     child: Row(children: [
@@ -73,15 +73,14 @@ class LayoutAppbar extends StatelessWidget {
                 items: NavigationCubit.get(context).items,
                 currentIndex: NavigationCubit.get(context).currentIndex,
                 onTap: (val) {
-                  NavigationCubit.get(context)
-                      .changeIndex(val, context);
+                  NavigationCubit.get(context).changeIndex(val, context);
                 },
               ),
             ],
           ),
         );
       },
-      listener: (context, state){},
+      listener: (context, state) {},
     );
   }
 }

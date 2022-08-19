@@ -7,11 +7,11 @@ class SignUpWelcomeMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
         child: Text(
-          "Hello Sign Up To use our App",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              fontStyle: FontStyle.italic),
-        ));
+      "Hello Sign Up To use our App",
+      style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+          fontStyle: FontStyle.italic),
+    ));
   }
 }

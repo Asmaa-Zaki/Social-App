@@ -24,49 +24,47 @@ class SignUpActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserCubit, UserStates>(
-      builder: (context, state) {
-        return Column(
-          children: [
-            ConditionalBuilder(
-              condition: state is! UserRegisterLoadingState,
-              builder: (BuildContext context) {
-                return Center(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          UserCubit.get(context).register(
-                              email: emailController.text,
-                              password: passwordController.text,
-                              name: nameController.text,
-                              phone: phoneController.text);
-                        },
-                        child: const Text("SignUp")));
-              },
-              fallback: (BuildContext context) {
-                return const CircularProgressIndicator();
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("If u already have an Account"),
-                TextButton(
-                    onPressed: () {
-                      buildPushReplacement(context, const SignInScreen());
-                    },
-                    child: const Text("Sign In")),
-              ],
-            )
-          ],
-        );
-      },
-      listener: (context, state) {
-        if (state is UserRegisterSuccessState) {
-          SnackBar snackBar =
-          const SnackBar(content: Text("Register Done Successfully"));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          buildPushReplacement(context, const SocialLayout());
-        }
-      });
+    return BlocConsumer<UserCubit, UserStates>(builder: (context, state) {
+      return Column(
+        children: [
+          ConditionalBuilder(
+            condition: state is! UserRegisterLoadingState,
+            builder: (BuildContext context) {
+              return Center(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        UserCubit.get(context).register(
+                            email: emailController.text,
+                            password: passwordController.text,
+                            name: nameController.text,
+                            phone: phoneController.text);
+                      },
+                      child: const Text("SignUp")));
+            },
+            fallback: (BuildContext context) {
+              return const CircularProgressIndicator();
+            },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("If u already have an Account"),
+              TextButton(
+                  onPressed: () {
+                    buildPushReplacement(context, const SignInScreen());
+                  },
+                  child: const Text("Sign In")),
+            ],
+          )
+        ],
+      );
+    }, listener: (context, state) {
+      if (state is UserRegisterSuccessState) {
+        SnackBar snackBar =
+            const SnackBar(content: Text("Register Done Successfully"));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        buildPushReplacement(context, const SocialLayout());
+      }
+    });
   }
 }

@@ -18,10 +18,10 @@ class UpdateImagesButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-      //  if (cubit.image != null || cubit.cover != null)
-          const SizedBox(
-            height: 20,
-          ),
+        //  if (cubit.image != null || cubit.cover != null)
+        const SizedBox(
+          height: 20,
+        ),
         if (cubit.image != null || cubit.cover != null)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

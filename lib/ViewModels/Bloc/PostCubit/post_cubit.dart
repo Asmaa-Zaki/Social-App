@@ -31,11 +31,10 @@ class PostCubit extends Cubit<PostAppStates> {
     emit(PostDeleteImageState());
   }
 
-  void createPostWithImage({
-    @required String? text,
-    @required String? dateTime,
-    required BuildContext context
-  }) {
+  void createPostWithImage(
+      {@required String? text,
+      @required String? dateTime,
+      required BuildContext context}) {
     emit(PostUploadImageLoadingState());
     FirebaseStorage.instance
         .ref()
@@ -45,7 +44,8 @@ class PostCubit extends Cubit<PostAppStates> {
       emit(PostUploadImageSuccessState());
       value.ref.getDownloadURL().then((value) {
         emit(PostUploadImageSuccessState());
-        createPost(text: text, dateTime: dateTime, postImage: value, context: context);
+        createPost(
+            text: text, dateTime: dateTime, postImage: value, context: context);
       }).catchError((err) {
         emit(PostUploadImageErrorState());
       });
@@ -55,13 +55,13 @@ class PostCubit extends Cubit<PostAppStates> {
   }
 
   void createPost(
-      {@required String? text, @required String? dateTime, String? postImage, @required context}) {
+      {@required String? text,
+      @required String? dateTime,
+      String? postImage,
+      @required context}) {
     emit(PostCreateLoadingState());
     PostModel post = PostModel(
-        uId: uId,
-        text: text,
-        dateTime: dateTime,
-        postImage: postImage);
+        uId: uId, text: text, dateTime: dateTime, postImage: postImage);
     FirebaseFirestore.instance
         .collection("Posts")
         .add(post.toMap())
@@ -83,7 +83,11 @@ class PostCubit extends Cubit<PostAppStates> {
     postsId = [];
     likes = [];
     emit(PostsGetLoadingState());
-    FirebaseFirestore.instance.collection("Posts").orderBy("dateTime").get().then((value) {
+    FirebaseFirestore.instance
+        .collection("Posts")
+        .orderBy("dateTime")
+        .get()
+        .then((value) {
       for (var element in value.docs) {
         postsList.add(PostModel.fromJson(element.data()));
         element.reference.collection("Likes").get().then((value) {

@@ -6,7 +6,9 @@ class CreatePostButton extends StatelessWidget {
   final TextEditingController textController;
   final DateTime now;
 
-  const CreatePostButton({Key? key, required this.textController, required this.now}) : super(key: key);
+  const CreatePostButton(
+      {Key? key, required this.textController, required this.now})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +17,33 @@ class CreatePostButton extends StatelessWidget {
           if (PostCubit.get(context).postImage == null) {
             PostCubit.get(context).createPost(
                 text: textController.text,
-                dateTime: (now.year.toString()+"-"+ now.month.toString() +"-"+ now.day.toString() +" "+ now.hour.toString() +":"+ now.minute.toString()+":"+ now.second.toString()),
+                dateTime: (now.year.toString() +
+                    "-" +
+                    now.month.toString() +
+                    "-" +
+                    now.day.toString() +
+                    " " +
+                    now.hour.toString() +
+                    ":" +
+                    now.minute.toString() +
+                    ":" +
+                    now.second.toString()),
                 context: context);
           } else {
             {
               PostCubit.get(context).createPostWithImage(
                   text: textController.text,
-                  dateTime: (now.year.toString()+"-"+ now.month.toString() +"-"+ now.day.toString() +" "+ now.hour.toString() +":"+ now.minute.toString() +":"+ now.minute.toString()),
+                  dateTime: (now.year.toString() +
+                      "-" +
+                      now.month.toString() +
+                      "-" +
+                      now.day.toString() +
+                      " " +
+                      now.hour.toString() +
+                      ":" +
+                      now.minute.toString() +
+                      ":" +
+                      now.minute.toString()),
                   context: context);
             }
           }

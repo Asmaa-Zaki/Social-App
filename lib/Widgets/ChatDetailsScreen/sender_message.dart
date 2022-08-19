@@ -25,8 +25,8 @@ class SenderMessage extends StatelessWidget {
               const Expanded(flex: 1, child: SizedBox()),
               Expanded(
                 flex: 3,
-                child:Container(
-                    decoration:  BoxDecoration(
+                child: Container(
+                    decoration: BoxDecoration(
                         color: Colors.blueGrey.shade900,
                         borderRadius: const BorderRadiusDirectional.only(
                           topStart: Radius.circular(10),
@@ -40,10 +40,11 @@ class SenderMessage extends StatelessWidget {
                           children: [
                             if (messageImage != null)
                               InkWell(
-                                  child: Image(image: NetworkImage(messageImage!)),
-                                  onTap: (){
+                                child:
+                                    Image(image: NetworkImage(messageImage!)),
+                                onTap: () {
                                   buildPush(context, ShowImage(messageImage!));
-                                  },
+                                },
                               ),
                             if (messageTxt != null)
                               Container(
@@ -51,8 +52,8 @@ class SenderMessage extends StatelessWidget {
                                 alignment: Alignment.centerRight,
                                 child: Text(
                                   messageTxt!,
-                                  style:
-                                  const TextStyle(fontSize: 16, color: Colors.white),
+                                  style: const TextStyle(
+                                      fontSize: 16, color: Colors.white),
                                 ),
                               ),
                             Container(
@@ -70,7 +71,8 @@ class SenderMessage extends StatelessWidget {
                         ),
                       ),
                     )),
-              )],
+              )
+            ],
           ),
         ));
   }

@@ -16,6 +16,12 @@ class UserCubit extends Cubit<UserStates> {
 
   static UserCubit get(BuildContext context) => BlocProvider.of(context);
 
+  bool loginPasswordVisible = true;
+  changeLoginPassword() {
+    loginPasswordVisible = !loginPasswordVisible;
+    emit(UserLoginPasswordVisibility());
+  }
+
   UserModel? user;
   void register(
       {required String email,
@@ -80,7 +86,16 @@ class UserCubit extends Cubit<UserStates> {
       getUser();
       emit(UserLoginSuccessState());
     }).catchError((err) {
-      emit(UserLoginErrorState());
+      String message = "";
+      FirebaseAuthException e = err;
+      if (e.code == "user-not-found") {
+        message = "No user found with this email";
+      } else if (e.code == "invalid-email") {
+        message = "Invalid Email";
+      } else if (e.code == "wrong-password") {
+        message = "Incorrect Password";
+      }
+      emit(UserLoginErrorState(message));
     });
   }
 

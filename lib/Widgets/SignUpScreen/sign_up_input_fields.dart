@@ -9,7 +9,13 @@ class SignUpInputFields extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController phoneController;
 
-  const SignUpInputFields({Key? key, required this.passwordController, required this.emailController, required this.nameController, required this.phoneController}) : super(key: key);
+  const SignUpInputFields(
+      {Key? key,
+      required this.passwordController,
+      required this.emailController,
+      required this.nameController,
+      required this.phoneController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +27,7 @@ class SignUpInputFields extends StatelessWidget {
         ),
         const Text(
           "Name",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         BuildTextFormField(
             controller: nameController,
@@ -40,9 +44,7 @@ class SignUpInputFields extends StatelessWidget {
         ),
         const Text(
           "Email",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         BuildTextFormField(
             controller: emailController,
@@ -60,9 +62,7 @@ class SignUpInputFields extends StatelessWidget {
         ),
         const Text(
           "Phone",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         BuildTextFormField(
             controller: phoneController,
@@ -80,9 +80,7 @@ class SignUpInputFields extends StatelessWidget {
         ),
         const Text(
           "Password",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         BuildTextFormField(
             controller: passwordController,

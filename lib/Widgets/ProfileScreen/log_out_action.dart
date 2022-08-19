@@ -21,8 +21,7 @@ class LogOutAction extends StatelessWidget {
               ),
               Text(
                 "LogOut",
-                style:
-                TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               ),
               Spacer(),
               Icon(Icons.arrow_forward_ios),
@@ -31,4 +30,3 @@ class LogOutAction extends StatelessWidget {
     );
   }
 }
-

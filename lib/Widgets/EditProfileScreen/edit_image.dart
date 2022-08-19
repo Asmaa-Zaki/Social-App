@@ -19,16 +19,14 @@ class EditImage extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 41,
-              backgroundColor:
-              Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             ),
             CircleAvatar(
                 radius: 50,
                 child: Container(
                   height: 100,
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  decoration:
-                  const BoxDecoration(shape: BoxShape.circle),
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
                   child: ConditionalBuilder(
                     builder: (BuildContext context) {
                       return Image(

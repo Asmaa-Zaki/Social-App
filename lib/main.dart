@@ -10,7 +10,6 @@ import 'ViewModels/Bloc/PostCubit/post_cubit.dart';
 import 'ViewModels/Bloc/PostCubit/post_states.dart';
 import 'ViewModels/Constants/constants.dart';
 import 'ViewModels/Local/CacheHelper.dart';
-import 'Views/LayoutScreen/layout_screen.dart';
 import 'Views/SignInScreen/signIn_screen.dart';
 
 main() {
@@ -31,10 +30,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late Widget currentWidget;
+    print('uId');
+    print(uId);
     if (uId == null) {
       currentWidget = const SignInScreen();
     } else {
-      currentWidget = const SocialLayout();
+      currentWidget = const SignInScreen();
     }
     return MultiBlocProvider(
         providers: [

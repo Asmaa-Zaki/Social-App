@@ -22,7 +22,8 @@ class HomeScreen extends StatelessWidget {
             condition: state is! PostsGetLoadingState,
             builder: (context) => ListView.builder(
               itemBuilder: (context, index) {
-                UserModel? user= UserCubit.get(context).getPostOwner(list[index].uId!);
+                UserModel? user =
+                    UserCubit.get(context).getPostOwner(list[index].uId!);
                 return Card(
                   elevation: 5,
                   child: Padding(

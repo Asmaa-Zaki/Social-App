@@ -22,8 +22,12 @@ class EditCoverAndImage extends StatelessWidget {
             body: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            EditCover(user: user,),
-            EditImage(user: user,)
+            EditCover(
+              user: user,
+            ),
+            EditImage(
+              user: user,
+            )
           ],
         ));
       },

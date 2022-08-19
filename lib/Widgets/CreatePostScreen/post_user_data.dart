@@ -11,16 +11,14 @@ class PostUserData extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 23,
-          backgroundImage:
-          NetworkImage(UserCubit.get(context).user!.image),
+          backgroundImage: NetworkImage(UserCubit.get(context).user!.image),
         ),
         const SizedBox(
           width: 5,
         ),
         Text(
           UserCubit.get(context).user!.name,
-          style: const TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 18),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         )
       ],
     );
