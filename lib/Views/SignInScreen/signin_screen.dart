@@ -14,7 +14,6 @@ class SignInScreen extends StatelessWidget {
           headerText: "Login",
         ),
         Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Expanded(flex: 4, child: SizedBox()),
             Expanded(
