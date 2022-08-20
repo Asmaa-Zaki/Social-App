@@ -34,15 +34,16 @@ class SignInInputFields extends StatelessWidget {
         ),
         BlocConsumer<UserCubit, UserStates>(
           builder: (context, state) {
-            bool isVisible = UserCubit.get(context).loginPasswordVisible;
+            bool isInVisible = UserCubit.get(context).isPasswordInVisible;
             return BuildTextFormField(
                 controller: passwordController,
                 label: "Password",
-                obscureText: isVisible,
+                obscureText: isInVisible,
+                keyboard: TextInputType.streetAddress,
                 showPassword: () {
                   UserCubit.get(context).changeLoginPassword();
                 },
-                postFix: !isVisible ? Icons.visibility : Icons.visibility_off,
+                postFix: !isInVisible ? Icons.visibility : Icons.visibility_off,
                 validate: (val) {
                   if (val!.isEmpty) {
                     return "Password is Required";

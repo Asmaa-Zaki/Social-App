@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/ViewModels/Constants/constants.dart';
@@ -23,26 +24,37 @@ class SignInActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(
+          height: 25,
+        ),
         Row(
           children: [
             const Spacer(),
             BlocConsumer<UserCubit, UserStates>(
               builder: (context, state) {
-                return ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            secondDefaultColor.withOpacity(.7))),
-                    onPressed: () {
-                      if (loginKey.currentState!.validate()) {
-                        UserCubit.get(context).signIn(
-                            email: emailController.text,
-                            password: passwordController.text);
-                      }
-                    },
-                    child: const Text(
-                      "SIGN IN",
-                      style: TextStyle(fontSize: 17),
-                    ));
+                return ConditionalBuilder(
+                  condition: state is! UserLoginLoadingState,
+                  builder: (BuildContext context) {
+                    return ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                secondDefaultColor.withOpacity(.7))),
+                        onPressed: () {
+                          if (loginKey.currentState!.validate()) {
+                            UserCubit.get(context).signIn(
+                                email: emailController.text,
+                                password: passwordController.text);
+                          }
+                        },
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(fontSize: 17),
+                        ));
+                  },
+                  fallback: (BuildContext context) {
+                    return const CircularProgressIndicator();
+                  },
+                );
               },
               listener: (context, state) {
                 if (state is UserLoginSuccessState) {
@@ -67,7 +79,7 @@ class SignInActions extends StatelessWidget {
                     buildPushReplacement(context, const SignUpScreen());
                   },
                   child: Text(
-                    "Sign Up",
+                    "Register",
                     style: TextStyle(
                         color: secondDefaultColor.withOpacity(.8),
                         fontWeight: FontWeight.bold),

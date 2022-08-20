@@ -15,17 +15,19 @@ class SignInBody extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: Form(
         key: loginKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SignInInputFields(
-                emailController: emailController,
-                passwordController: passwordController),
-            SignInActions(
-                emailController: emailController,
-                passwordController: passwordController,
-                loginKey: loginKey),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SignInInputFields(
+                  emailController: emailController,
+                  passwordController: passwordController),
+              SignInActions(
+                  emailController: emailController,
+                  passwordController: passwordController,
+                  loginKey: loginKey),
+            ],
+          ),
         ),
       ),
     );

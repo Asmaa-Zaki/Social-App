@@ -6,7 +6,11 @@ class UserRegisterLoadingState extends UserStates {}
 
 class UserRegisterSuccessState extends UserStates {}
 
-class UserRegisterErrorState extends UserStates {}
+class UserRegisterErrorState extends UserStates {
+  final String errorMessage;
+
+  UserRegisterErrorState(this.errorMessage);
+}
 
 class UserCreateLoadingState extends UserStates {}
 
@@ -64,4 +68,4 @@ class UserProfileUpdateErrorState extends UserStates {}
 
 class UserLogoutSuccessState extends UserStates {}
 
-class UserLoginPasswordVisibility extends UserStates {}
+class UserPasswordVisibility extends UserStates {}

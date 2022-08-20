@@ -16,10 +16,10 @@ class UserCubit extends Cubit<UserStates> {
 
   static UserCubit get(BuildContext context) => BlocProvider.of(context);
 
-  bool loginPasswordVisible = true;
+  bool isPasswordInVisible = true;
   changeLoginPassword() {
-    loginPasswordVisible = !loginPasswordVisible;
-    emit(UserLoginPasswordVisibility());
+    isPasswordInVisible = !isPasswordInVisible;
+    emit(UserPasswordVisibility());
   }
 
   UserModel? user;
@@ -42,7 +42,16 @@ class UserCubit extends Cubit<UserStates> {
       uId = value.user!.uid;
       emit(UserRegisterSuccessState());
     }).catchError((err) {
-      emit(UserRegisterErrorState());
+      String message = "Error";
+      FirebaseAuthException e = err;
+      if (e.code == "email-already-in-use") {
+        message = "Email already In Use";
+      } else if (e.code == "invalid-email") {
+        message = "Invalid Email";
+      } else if (e.code == "weak-password") {
+        message = "Weak Password";
+      }
+      emit(UserRegisterErrorState(message));
     });
   }
 
@@ -86,7 +95,7 @@ class UserCubit extends Cubit<UserStates> {
       getUser();
       emit(UserLoginSuccessState());
     }).catchError((err) {
-      String message = "";
+      String message = "Error";
       FirebaseAuthException e = err;
       if (e.code == "user-not-found") {
         message = "No user found with this email";

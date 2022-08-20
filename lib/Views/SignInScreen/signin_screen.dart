@@ -14,7 +14,11 @@ class SignInScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Expanded(flex: 3, child: TopCurves()),
+          const Expanded(
+              flex: 3,
+              child: TopCurves(
+                headerText: 'Login',
+              )),
           Expanded(flex: 5, child: SignInBody()),
           const Expanded(flex: 2, child: BottomCurves())
         ],

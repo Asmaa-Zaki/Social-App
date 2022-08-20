@@ -5,7 +5,8 @@ import '../../../Views/Curves/LoginAndSign/top_curve_one.dart';
 import '../../../Views/Curves/LoginAndSign/top_curve_two.dart';
 
 class TopCurves extends StatelessWidget {
-  const TopCurves({Key? key}) : super(key: key);
+  final String headerText;
+  const TopCurves({Key? key, required this.headerText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class TopCurves extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Text(
-              "LOGIN",
+              headerText,
               style: TextStyle(
                   color: secondDefaultColor.withOpacity(.8),
                   fontSize: 30,
