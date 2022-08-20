@@ -17,7 +17,6 @@ class SignInBody extends StatelessWidget {
         key: loginKey,
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SignInInputFields(
                   emailController: emailController,

@@ -16,22 +16,20 @@ class SignUpBody extends StatelessWidget {
     GlobalKey<FormState> signUpKey = GlobalKey<FormState>();
     return Form(
       key: signUpKey,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SignUpInputFields(
-                passwordController: passwordController,
-                emailController: emailController,
-                nameController: nameController,
-                phoneController: phoneController),
-            SignUpActions(
-                passwordController: passwordController,
-                emailController: emailController,
-                nameController: nameController,
-                phoneController: phoneController,
-                signUpKey: signUpKey),
-          ],
-        ),
+      child: Column(
+        children: [
+          SignUpInputFields(
+              passwordController: passwordController,
+              emailController: emailController,
+              nameController: nameController,
+              phoneController: phoneController),
+          SignUpActions(
+              passwordController: passwordController,
+              emailController: emailController,
+              nameController: nameController,
+              phoneController: phoneController,
+              signUpKey: signUpKey),
+        ],
       ),
     );
   }

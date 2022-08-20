@@ -30,8 +30,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late Widget currentWidget;
-    print('uId');
-    print(uId);
     if (uId == null) {
       currentWidget = const SignInScreen();
     } else {

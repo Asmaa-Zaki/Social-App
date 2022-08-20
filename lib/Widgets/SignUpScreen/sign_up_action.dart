@@ -52,8 +52,10 @@ class SignUpActions extends StatelessWidget {
                             phone: phoneController.text);
                       }
                     },
-                    child: const Text("Register",
-                      style: TextStyle(fontSize: 17),));
+                    child: const Text(
+                      "Register",
+                      style: TextStyle(fontSize: 17),
+                    ));
               },
               fallback: (BuildContext context) {
                 return const CircularProgressIndicator();

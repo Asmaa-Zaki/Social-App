@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:social_app/Widgets/SharedWidgets/SignAndRegisterCurves/bottom_curves.dart';
+import 'package:social_app/Views/Curves/LoginAndSign/curve_background.dart';
 import 'package:social_app/Widgets/SignInScreen/sign_in_body.dart';
-
-import '../../Widgets/SharedWidgets/SignAndRegisterCurves/top_curves.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -11,18 +9,31 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Expanded(
-              flex: 3,
-              child: TopCurves(
-                headerText: 'Login',
-              )),
-          Expanded(flex: 5, child: SignInBody()),
-          const Expanded(flex: 2, child: BottomCurves())
-        ],
-      ),
+      body: Stack(children: [
+        const CurveBackground(
+          headerText: "Login",
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Expanded(flex: 4, child: SizedBox()),
+            Expanded(
+              flex: 10,
+              child: CustomScrollView(slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    children: [
+                      Expanded(flex: 8, child: SignInBody()),
+                      const Expanded(flex: 2, child: SizedBox())
+                    ],
+                  ),
+                )
+              ]),
+            ),
+          ],
+        ),
+      ]),
     );
   }
 }
