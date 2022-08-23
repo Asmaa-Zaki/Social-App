@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_persistent_keyboard_height/flutter_persistent_keyboard_height.dart';
 import 'package:social_app/Models/MessageModel/message_model.dart';
-import 'package:social_app/Widgets/ChatDetailsScreen/chat_messages.dart';
 import 'package:social_app/Widgets/ChatDetailsScreen/send_action.dart';
 
 import '../../Models/UserModel/user_model.dart';
 import '../../ViewModels/Bloc/ChatCubit/chat_cubit.dart';
 import '../../ViewModels/Bloc/ChatCubit/chat_states.dart';
+import '../../Widgets/ChatDetailsScreen/ChatMessages/chat_messages.dart';
 import '../../Widgets/ChatDetailsScreen/sender_data.dart';
 
 class ChatsDetails extends StatelessWidget {
@@ -18,18 +19,26 @@ class ChatsDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       ChatCubit.get(context).getMessages(receiver.uId);
-      return Scaffold(
-        appBar: AppBar(
-          title: ReceiverData(receiver),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2),
-          child: Column(
+      return WillPopScope(
+        onWillPop: () async {
+          /* if (ChatCubit.get(context).emojiHide == false) {
+
+            return false;
+          } else {*/
+          ChatCubit.get(context).changeEmojiState(true);
+          return true;
+          //  }
+        },
+        child: Scaffold(
+          key: ChatCubit.get(context).scaffoldKey,
+          appBar: AppBar(
+            title: ReceiverData(receiver),
+          ),
+          body: Column(
             children: [
               BlocConsumer<ChatCubit, ChatStates>(
                 builder: (context, state) {
                   List<MessageModel> messages = ChatCubit.get(context).messages;
-                  messages = messages.reversed.toList();
                   return MessagesList(receiver, messages);
                 },
                 listener: (context, state) {},
@@ -37,7 +46,22 @@ class ChatsDetails extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              SendAction(receiver, false, messageController)
+              SendAction(receiver, false),
+              const SizedBox(
+                height: 2,
+              ),
+              BlocConsumer<ChatCubit, ChatStates>(
+                builder: (context, state) {
+                  return Offstage(
+                    offstage: ChatCubit.get(context).emojiHide,
+                    child: SizedBox(
+                      height:
+                          PersistentKeyboardHeight.of(context).keyboardHeight,
+                    ),
+                  );
+                },
+                listener: (context, state) {},
+              ),
             ],
           ),
         ),

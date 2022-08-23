@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_persistent_keyboard_height/flutter_persistent_keyboard_height.dart';
 import 'package:social_app/ViewModels/Bloc/UserCubit/user_states.dart';
 
 import '../../ViewModels/Bloc/UserCubit/user_cubit.dart';
@@ -23,7 +24,8 @@ class AppUsers extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  ChatsDetails(users[index])));
+                                  PersistentKeyboardHeightProvider(
+                                      child: ChatsDetails(users[index]))));
                     },
                     child: Row(
                       children: [

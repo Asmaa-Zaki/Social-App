@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/ViewModels/Bloc/UserCubit/user_cubit.dart';
 import 'package:social_app/ViewModels/Bloc/UserCubit/user_states.dart';
+import 'package:social_app/Views/LayoutScreen/layout_screen.dart';
 
 import 'ViewModels/Bloc/BlocObserver/BlocObserver.dart';
 import 'ViewModels/Bloc/ChatCubit/chat_cubit.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
     if (uId == null) {
       currentWidget = const SignInScreen();
     } else {
-      currentWidget = const SignInScreen();
+      currentWidget = const SocialLayout();
     }
     return MultiBlocProvider(
         providers: [

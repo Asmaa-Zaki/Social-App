@@ -36,6 +36,7 @@ class ChatCubit extends Cubit<ChatStates> {
   }
 
   Future addMessageToSender(MessageModel messageModel, String receiverId) {
+    emit(MessageSendSuccess());
     return FirebaseFirestore.instance
         .collection("Chats")
         .doc(uId! + receiverId)
@@ -79,6 +80,7 @@ class ChatCubit extends Cubit<ChatStates> {
     required String receiverId,
     required String dateTime,
   }) {
+    emit(MessageSendSuccess());
     if (chatImage != null) {
       uploadPostImage(receiverId).then((value) {
         addMessageToFireBase(
@@ -104,15 +106,24 @@ class ChatCubit extends Cubit<ChatStates> {
         .orderBy("dateTime")
         .snapshots()
         .listen((event) {
-      emit(GetChatSuccess());
       messages = [];
       for (var value in event.docs) {
         messages.add(MessageModel.fromJson(value.data()));
       }
+      emit(GetChatSuccess());
     });
   }
 
+  final TextEditingController messageController = TextEditingController();
   void changeMessageIcon() {
     emit(ChangeMessageIcon());
   }
+
+  bool emojiHide = true;
+  changeEmojiState(bool state) {
+    emojiHide = state;
+    emit(ChangeEmojiState());
+  }
+
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 }

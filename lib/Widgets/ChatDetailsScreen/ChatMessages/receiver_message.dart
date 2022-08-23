@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/ViewModels/Constants/constants.dart';
 
-import '../../ViewModels/Components/Components.dart';
-import '../SharedWidgets/ShowImage/show_image.dart';
+import '../../../ViewModels/Components/Components.dart';
+import '../../SharedWidgets/ShowImage/show_image.dart';
 
 class ReceiverMessage extends StatelessWidget {
   final String? messageTxt;
@@ -22,9 +23,9 @@ class ReceiverMessage extends StatelessWidget {
               Expanded(
                   flex: 3,
                   child: Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.black54,
-                          borderRadius: BorderRadiusDirectional.only(
+                      decoration: BoxDecoration(
+                          color: secondDefaultColor.withOpacity(.2),
+                          borderRadius: const BorderRadiusDirectional.only(
                             topStart: Radius.circular(10),
                             bottomEnd: Radius.circular(10),
                             topEnd: Radius.circular(10),
@@ -48,17 +49,17 @@ class ReceiverMessage extends StatelessWidget {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     messageTxt!,
-                                    style: const TextStyle(
-                                        fontSize: 16, color: Colors.white),
+                                    style: const TextStyle(fontSize: 16),
                                   ),
                                 ),
                               Container(
+                                padding: const EdgeInsets.only(top: 4),
                                 alignment: Alignment.bottomLeft,
                                 child: Text(
                                   messageTime,
                                   style: const TextStyle(
                                     fontSize: 12,
-                                    color: Colors.white,
+                                    color: Colors.black45,
                                   ),
                                 ),
                               ),

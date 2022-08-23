@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/ViewModels/Components/components.dart';
 
-import '../SharedWidgets/ShowImage/show_image.dart';
+import '../../SharedWidgets/ShowImage/show_image.dart';
 
 class SenderMessage extends StatelessWidget {
   final String? messageTxt;

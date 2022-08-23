@@ -12,4 +12,6 @@ class MessageSendError extends ChatStates {}
 
 class ChangeMessageIcon extends ChatStates {}
 
+class ChangeEmojiState extends ChatStates {}
+
 class GalleryFileSelected extends ChatStates {}
