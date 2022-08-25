@@ -19,6 +19,8 @@ class ShowImageSelected extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         ChatCubit.get(context).chatImage = null;
+        ChatCubit.get(context).messageController.clear();
+        ChatCubit.get(context).changeMessageIcon();
         return true;
       },
       child: Scaffold(
@@ -28,6 +30,8 @@ class ShowImageSelected extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
+                  ChatCubit.get(context).messageController.clear();
+                  ChatCubit.get(context).changeMessageIcon();
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.close))

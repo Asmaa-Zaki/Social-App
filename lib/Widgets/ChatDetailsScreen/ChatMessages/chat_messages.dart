@@ -47,13 +47,13 @@ class MessagesList extends StatelessWidget {
                   return SenderMessage(
                       messageTxt: element.message,
                       messageTime:
-                          minuteFormat.format(DateTime.parse(element.dateTime)),
+                          timeFormat.format(DateTime.parse(element.dateTime)),
                       messageImage: element.image);
                 } else {
                   return ReceiverMessage(
                       messageTxt: element.message,
                       messageTime:
-                          minuteFormat.format(DateTime.parse(element.dateTime)),
+                          timeFormat.format(DateTime.parse(element.dateTime)),
                       messageImage: element.image);
                 }
               },

@@ -41,14 +41,17 @@ class PostAddPhoto extends StatelessWidget {
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(
                     Icons.add_photo_alternate_outlined,
                     size: 16,
+                    color: Theme.of(context).iconTheme.color,
                   ),
                   Text(
                     " Add Photo",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.bodyText1?.color),
                   )
                 ],
               ),

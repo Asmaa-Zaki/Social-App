@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/Models/PostModel/post_model.dart';
+import 'package:social_app/ViewModels/Components/components.dart';
 
 import '../SharedWidgets/ShowImage/show_image.dart';
 
@@ -26,10 +27,7 @@ class PostData extends StatelessWidget {
         if (list[index].postImage != null)
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ShowImage(list[index].postImage!)));
+              buildPush(context, ShowImage(list[index].postImage!));
             },
             child: Container(
               margin: const EdgeInsets.only(left: 8, right: 8, top: 10),

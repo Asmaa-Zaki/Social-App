@@ -17,33 +17,13 @@ class CreatePostButton extends StatelessWidget {
           if (PostCubit.get(context).postImage == null) {
             PostCubit.get(context).createPost(
                 text: textController.text,
-                dateTime: (now.year.toString() +
-                    "-" +
-                    now.month.toString() +
-                    "-" +
-                    now.day.toString() +
-                    " " +
-                    now.hour.toString() +
-                    ":" +
-                    now.minute.toString() +
-                    ":" +
-                    now.second.toString()),
+                dateTime: now.toString(),
                 context: context);
           } else {
             {
               PostCubit.get(context).createPostWithImage(
                   text: textController.text,
-                  dateTime: (now.year.toString() +
-                      "-" +
-                      now.month.toString() +
-                      "-" +
-                      now.day.toString() +
-                      " " +
-                      now.hour.toString() +
-                      ":" +
-                      now.minute.toString() +
-                      ":" +
-                      now.minute.toString()),
+                  dateTime: now.toString(),
                   context: context);
             }
           }

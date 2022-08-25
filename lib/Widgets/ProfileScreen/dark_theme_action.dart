@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/ViewModels/Bloc/ThemeCubit/theme_cubit.dart';
+import 'package:social_app/ViewModels/Bloc/ThemeCubit/theme_states.dart';
+import 'package:social_app/ViewModels/Local/CacheHelper.dart';
 
 class DarkThemeAction extends StatelessWidget {
   const DarkThemeAction({Key? key}) : super(key: key);
@@ -18,7 +22,16 @@ class DarkThemeAction extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
           ),
           const Spacer(),
-          Switch(value: true, onChanged: (value) {}),
+          BlocConsumer<ThemeCubit, ThemeStates>(
+              builder: (context, state) {
+                return Switch(
+                    value: ThemeCubit.get(context).darkTheme,
+                    onChanged: (value) {
+                      ThemeCubit.get(context).changeAppTheme(value);
+                      CacheHelper.setData(key: "dark", value: value);
+                    });
+              },
+              listener: (context, state) {}),
         ],
       ),
     );

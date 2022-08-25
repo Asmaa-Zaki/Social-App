@@ -69,3 +69,5 @@ class UserProfileUpdateErrorState extends UserStates {}
 class UserLogoutSuccessState extends UserStates {}
 
 class UserPasswordVisibility extends UserStates {}
+
+class UserDataChanged extends UserStates {}

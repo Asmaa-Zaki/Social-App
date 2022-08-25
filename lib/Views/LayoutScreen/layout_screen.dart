@@ -17,8 +17,8 @@ class SocialLayout extends StatelessWidget {
               appBar: PreferredSize(
                   preferredSize: Size.fromHeight(
                       NavigationCubit.get(context).currentIndex != 1
-                          ? 106
-                          : 56),
+                          ? 106.20
+                          : 56.20),
                   child: const LayoutAppbar()),
               body: NavigationCubit.get(context)
                   .screens[NavigationCubit.get(context).currentIndex],

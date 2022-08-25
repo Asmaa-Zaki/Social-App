@@ -10,10 +10,13 @@ class PostBody extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TextFormField(
+        TextField(
           controller: textController,
           decoration: const InputDecoration(
-              hintText: "What is in your Mind!", border: InputBorder.none),
+              hintText: "What is in your Mind!",
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none),
           maxLines: 10,
         ),
       ],

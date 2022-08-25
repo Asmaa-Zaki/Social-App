@@ -63,7 +63,7 @@ class SenderMessage extends StatelessWidget {
                                 messageTime,
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.grey[350],
+                                  color: Colors.grey[400],
                                 ),
                               ),
                             ),

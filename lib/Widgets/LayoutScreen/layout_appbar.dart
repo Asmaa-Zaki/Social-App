@@ -67,14 +67,21 @@ class LayoutAppbar extends StatelessWidget {
                         width: 15,
                       )
                     ])),
-              BottomNavigationBar(
-                elevation: 3,
-                type: BottomNavigationBarType.fixed,
-                items: NavigationCubit.get(context).items,
-                currentIndex: NavigationCubit.get(context).currentIndex,
-                onTap: (val) {
-                  NavigationCubit.get(context).changeIndex(val, context);
-                },
+              Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                            width: .20,
+                            color: Theme.of(context).iconTheme.color ??
+                                Colors.black))),
+                child: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  items: NavigationCubit.get(context).items,
+                  currentIndex: NavigationCubit.get(context).currentIndex,
+                  onTap: (val) {
+                    NavigationCubit.get(context).changeIndex(val, context);
+                  },
+                ),
               ),
             ],
           ),

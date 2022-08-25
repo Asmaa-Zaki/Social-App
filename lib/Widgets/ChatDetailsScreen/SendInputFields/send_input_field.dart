@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'message_text_field.dart';
+import 'send_emoji.dart';
 import 'send_image.dart';
 
 class SendInputField extends StatelessWidget {
@@ -12,7 +13,7 @@ class SendInputField extends StatelessWidget {
     return Expanded(
       flex: 10,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 0),
+        margin: const EdgeInsets.only(left: 5),
         decoration: BoxDecoration(
             color: Colors.blueGrey[900],
             borderRadius:
@@ -20,6 +21,7 @@ class SendInputField extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+            const SendEmoji(),
             const MessageTextField(),
             if (image != true) const SendImage()
           ],

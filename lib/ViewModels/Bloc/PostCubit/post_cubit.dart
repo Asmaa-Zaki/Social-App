@@ -90,10 +90,12 @@ class PostCubit extends Cubit<PostAppStates> {
         .then((value) {
       for (var element in value.docs) {
         postsList.add(PostModel.fromJson(element.data()));
-        element.reference.collection("Likes").get().then((value) {
-          likes.add(value.docs.length);
+        element.reference.collection("Likes").get().then((likeValues) {
+          likes.add(likeValues.docs.length);
           postsId.add(element.id);
-          emit(PostsGetSuccessState());
+          if (value.docs.length == postsList.length) {
+            emit(PostsGetSuccessState());
+          }
         });
       }
     }).catchError((err) {

@@ -24,7 +24,7 @@ class ReceiverMessage extends StatelessWidget {
                   flex: 3,
                   child: Container(
                       decoration: BoxDecoration(
-                          color: secondDefaultColor.withOpacity(.2),
+                          color: secondDefaultColor.withOpacity(.1),
                           borderRadius: const BorderRadiusDirectional.only(
                             topStart: Radius.circular(10),
                             bottomEnd: Radius.circular(10),
@@ -57,10 +57,12 @@ class ReceiverMessage extends StatelessWidget {
                                 alignment: Alignment.bottomLeft,
                                 child: Text(
                                   messageTime,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black45,
-                                  ),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Theme.of(context)
+                                          .iconTheme
+                                          .color
+                                          ?.withOpacity(.4)),
                                 ),
                               ),
                             ],

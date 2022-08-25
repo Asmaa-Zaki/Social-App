@@ -37,8 +37,8 @@ class SignInActions extends StatelessWidget {
                   builder: (BuildContext context) {
                     return ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                secondDefaultColor.withOpacity(.7))),
+                            backgroundColor:
+                                MaterialStateProperty.all(secondDefaultColor)),
                         onPressed: () {
                           if (loginKey.currentState!.validate()) {
                             UserCubit.get(context).signIn(
@@ -81,8 +81,7 @@ class SignInActions extends StatelessWidget {
                   child: Text(
                     "Register",
                     style: TextStyle(
-                        color: secondDefaultColor.withOpacity(.8),
-                        fontWeight: FontWeight.bold),
+                        color: secondDefaultColor, fontWeight: FontWeight.bold),
                   ))
             ],
           ),

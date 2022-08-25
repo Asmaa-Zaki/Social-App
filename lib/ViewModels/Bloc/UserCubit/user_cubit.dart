@@ -287,4 +287,12 @@ class UserCubit extends Cubit<UserStates> {
       emit(UserLogoutSuccessState());
     });
   }
+
+  void userDataChanged() {
+    emit(UserDataChanged());
+  }
+
+  final nameController = TextEditingController();
+  final dioController = TextEditingController();
+  final phoneController = TextEditingController();
 }

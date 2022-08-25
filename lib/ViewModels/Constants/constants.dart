@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 String? uId = FirebaseAuth.instance.currentUser?.uid;
 
 Color firstDefaultColor = Colors.blueGrey.shade900;
-Color secondDefaultColor = Colors.blue.shade900;
+Color secondDefaultColor = Colors.blueGrey;
+Color defaultDarkColor = Colors.grey.shade900;
 
-final minuteFormat = DateFormat.jm();
+final timeFormat = DateFormat.jm();
 final dateFormat = DateFormat.yMd();

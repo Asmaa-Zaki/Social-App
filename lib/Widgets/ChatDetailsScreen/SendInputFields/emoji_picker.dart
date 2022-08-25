@@ -5,11 +5,8 @@ import 'package:flutter_persistent_keyboard_height/flutter_persistent_keyboard_h
 import 'package:social_app/ViewModels/Bloc/ChatCubit/chat_cubit.dart';
 import 'package:social_app/ViewModels/Bloc/ChatCubit/chat_states.dart';
 
-class SendEmoji extends StatelessWidget {
-  final TextEditingController messageController;
-
-  const SendEmoji({Key? key, required this.messageController})
-      : super(key: key);
+class EmojiPickerWidget extends StatelessWidget {
+  const EmojiPickerWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChatCubit, ChatStates>(
@@ -17,7 +14,7 @@ class SendEmoji extends StatelessWidget {
           return SizedBox(
             height: PersistentKeyboardHeight.of(context).keyboardHeight,
             child: EmojiPicker(
-                textEditingController: messageController,
+                textEditingController: ChatCubit.get(context).messageController,
                 onEmojiSelected: (Category category, Emoji emoji) {
                   ChatCubit.get(context).changeMessageIcon();
                 },

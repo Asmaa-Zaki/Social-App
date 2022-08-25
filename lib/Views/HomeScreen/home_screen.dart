@@ -1,6 +1,8 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/ViewModels/Bloc/ThemeCubit/theme_cubit.dart';
 import 'package:social_app/ViewModels/Bloc/UserCubit/user_cubit.dart';
 import 'package:social_app/Widgets/HomeScreen/post_actions.dart';
 import 'package:social_app/Widgets/HomeScreen/post_data.dart';
@@ -24,18 +26,17 @@ class HomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 UserModel? user =
                     UserCubit.get(context).getPostOwner(list[index].uId!);
-                return Card(
-                  elevation: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                return Container(
+                  color: ThemeCubit.get(context).darkTheme
+                      ? Colors.black38
+                      : Colors.white,
+                  child: Card(
+                    margin: const EdgeInsets.only(top: 8),
+                    elevation: 5,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         UserData(user: user!, dateTime: list[index].dateTime!),
-                        Container(
-                          height: .5,
-                          color: Colors.grey[300],
-                        ),
                         PostData(list: list, index: index),
                         const SizedBox(
                           height: 7,
