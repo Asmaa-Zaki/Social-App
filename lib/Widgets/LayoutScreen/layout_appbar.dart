@@ -12,7 +12,7 @@ class LayoutAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<NavigationCubit, NavigationState>(
+    return BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state) {
         return SafeArea(
           child: Column(
@@ -35,15 +35,6 @@ class LayoutAppbar extends StatelessWidget {
                                 Icons.messenger_rounded,
                                 size: 18,
                               ))),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      CircleAvatar(
-                          backgroundColor: Colors.grey[300],
-                          radius: 16,
-                          child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.search, size: 18))),
                       const SizedBox(
                         width: 15,
                       ),
@@ -87,7 +78,6 @@ class LayoutAppbar extends StatelessWidget {
           ),
         );
       },
-      listener: (context, state) {},
     );
   }
 }

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/ViewModels/Bloc/ThemeCubit/theme_cubit.dart';
 import 'package:social_app/ViewModels/Bloc/ThemeCubit/theme_states.dart';
 import 'package:social_app/ViewModels/Bloc/UserCubit/user_cubit.dart';
-import 'package:social_app/ViewModels/Bloc/UserCubit/user_states.dart';
 import 'package:social_app/Views/LayoutScreen/layout_screen.dart';
 import 'package:social_app/Widgets/Themes/dark_theme.dart';
 import 'package:social_app/Widgets/Themes/light_theme.dart';
@@ -12,7 +11,6 @@ import 'package:social_app/Widgets/Themes/light_theme.dart';
 import 'ViewModels/Bloc/BlocObserver/BlocObserver.dart';
 import 'ViewModels/Bloc/ChatCubit/chat_cubit.dart';
 import 'ViewModels/Bloc/PostCubit/post_cubit.dart';
-import 'ViewModels/Bloc/PostCubit/post_states.dart';
 import 'ViewModels/Constants/constants.dart';
 import 'ViewModels/Local/CacheHelper.dart';
 import 'Views/SignInScreen/signIn_screen.dart';
@@ -43,34 +41,26 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider<ChatCubit>(create: (context) => ChatCubit()),
-          BlocProvider<PostCubit>(create: (context) => PostCubit()..getPosts()),
+          BlocProvider<PostCubit>(
+              create: (context) => PostCubit()..getPosts(false)),
           BlocProvider<UserCubit>(
               create: (context) => UserCubit()
                 ..getUser()
                 ..getUsers()),
           BlocProvider<ThemeCubit>(create: (context) => ThemeCubit())
         ],
-        child: BlocConsumer<UserCubit, UserStates>(
+        child: BlocBuilder<ThemeCubit, ThemeStates>(
           builder: (context, state) {
-            return BlocConsumer<PostCubit, PostAppStates>(
-                builder: (context, state) {
-                  return BlocConsumer<ThemeCubit, ThemeStates>(
-                      builder: (context, state) {
-                        return MaterialApp(
-                          debugShowCheckedModeBanner: false,
-                          home: currentWidget,
-                          darkTheme: darkTheme(),
-                          theme: lightTheme(),
-                          themeMode: ThemeCubit.get(context).darkTheme
-                              ? ThemeMode.dark
-                              : ThemeMode.light,
-                        );
-                      },
-                      listener: (context, state) {});
-                },
-                listener: (context, state) {});
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: currentWidget,
+              darkTheme: darkTheme(),
+              theme: lightTheme(),
+              themeMode: ThemeCubit.get(context).darkTheme
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
+            );
           },
-          listener: (context, state) {},
         ));
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/ViewModels/Components/components.dart';
 
 import '../../ViewModels/Bloc/PostCubit/post_cubit.dart';
+import '../../ViewModels/Bloc/PostCubit/post_states.dart';
 
 class CreatePostButton extends StatelessWidget {
   final TextEditingController textController;
@@ -12,25 +15,44 @@ class CreatePostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-        onPressed: () {
-          if (PostCubit.get(context).postImage == null) {
-            PostCubit.get(context).createPost(
-                text: textController.text,
-                dateTime: now.toString(),
-                context: context);
-          } else {
-            {
-              PostCubit.get(context).createPostWithImage(
-                  text: textController.text,
-                  dateTime: now.toString(),
-                  context: context);
-            }
-          }
-        },
-        child: const Text(
-          "Add",
-          style: TextStyle(color: Colors.white, fontSize: 17),
-        ));
+    return BlocConsumer<PostCubit, PostAppStates>(builder: (context, state) {
+      if (state is PostCreateLoadingState) {
+        return const Text("");
+      }
+      return MaterialButton(
+          textColor: Colors.white,
+          disabledTextColor: Colors.grey[700],
+          onPressed: (PostCubit.get(context).postAssetPath != null ||
+                  textController.text.isNotEmpty)
+              ? () {
+                  if (PostCubit.get(context).postAssetPath == null) {
+                    PostCubit.get(context).createPost(
+                      text: textController.text,
+                      dateTime: now.toString(),
+                    );
+                  } else {
+                    {
+                      PostCubit.get(context).createPostWithAsset(
+                          text: textController.text.isEmpty
+                              ? null
+                              : textController.text,
+                          dateTime: now.toString(),
+                          context: context);
+                    }
+                  }
+                }
+              : null,
+          child: const Text(
+            "Add",
+            style: TextStyle(fontSize: 17),
+          ));
+    }, listener: (context, state) {
+      if (state is PostCreateSuccessState) {
+        showSnackBar(context, "Your Post uploaded successfully");
+        Navigator.pop(context);
+      } else if (state is PostCreateErrorState) {
+        showSnackBar(context, "Error uploading your post");
+      }
+    });
   }
 }

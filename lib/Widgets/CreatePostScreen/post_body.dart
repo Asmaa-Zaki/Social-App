@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/ViewModels/Bloc/PostCubit/post_cubit.dart';
 
 class PostBody extends StatelessWidget {
   final TextEditingController textController;
@@ -18,6 +19,9 @@ class PostBody extends StatelessWidget {
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none),
           maxLines: 10,
+          onChanged: (value) {
+            PostCubit.get(context).postBodyChanged();
+          },
         ),
       ],
     );

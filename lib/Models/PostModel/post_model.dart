@@ -1,16 +1,26 @@
 class PostModel {
-  late String? uId;
-  late String? text;
-  late String? postImage;
-  late String? dateTime;
+  late String uId;
+  String? text;
+  String? postImage;
+  String? postVideo;
+  late String dateTime;
+  late String postId;
 
-  PostModel({this.uId, this.postImage, this.text, this.dateTime});
+  PostModel(
+      {required this.uId,
+      this.postImage,
+      this.text,
+      required this.dateTime,
+      this.postVideo,
+      required this.postId});
 
   PostModel.fromJson(Map<String, dynamic> data) {
     uId = data["uId"];
     text = data["text"];
     postImage = data["postImage"];
     dateTime = data["dateTime"];
+    postId = data['postId'];
+    postVideo = data["postVideo"];
   }
 
   Map<String, dynamic> toMap() {
@@ -19,6 +29,8 @@ class PostModel {
       "dateTime": dateTime,
       "postImage": postImage,
       "text": text,
+      "postId": postId,
+      "postVideo": postVideo
     };
   }
 }

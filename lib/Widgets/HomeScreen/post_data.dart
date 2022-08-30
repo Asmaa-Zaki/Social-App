@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/Models/PostModel/post_model.dart';
 import 'package:social_app/ViewModels/Components/components.dart';
+import 'package:social_app/Widgets/HomeScreen/show_post_video.dart';
 
 import '../SharedWidgets/ShowImage/show_image.dart';
 
@@ -14,16 +15,18 @@ class PostData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              list[index].text!,
-              style: const TextStyle(fontWeight: FontWeight.bold, height: 1.5),
+        if (list[index].text != null)
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                list[index].text!,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, height: 1.5),
+              ),
             ),
           ),
-        ),
         if (list[index].postImage != null)
           InkWell(
             onTap: () {
@@ -40,6 +43,8 @@ class PostData extends StatelessWidget {
                       image: NetworkImage(list[index].postImage!))),
             ),
           ),
+        if (list[index].postVideo != null)
+          SizedBox(height: 300, child: DisplayVideo(list[index].postVideo!))
       ],
     );
   }
