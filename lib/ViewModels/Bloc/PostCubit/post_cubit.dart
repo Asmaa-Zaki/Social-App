@@ -68,7 +68,11 @@ class PostCubit extends Cubit<PostAppStates> {
           video = null;
         }
         createPost(
-            text: text, dateTime: dateTime, postImage: image, postVideo: video);
+            text: text,
+            dateTime: dateTime,
+            postImage: image,
+            postVideo: video,
+            context: context);
       });
     });
   }
@@ -78,7 +82,8 @@ class PostCubit extends Cubit<PostAppStates> {
       {@required String? text,
       required String dateTime,
       String? postImage,
-      String? postVideo}) {
+      String? postVideo,
+      required BuildContext context}) {
     emit(PostCreateLoadingState());
     String postId = firebaseFirestore.collection("Posts").doc().id;
     PostModel post = PostModel(
@@ -104,6 +109,8 @@ class PostCubit extends Cubit<PostAppStates> {
 
   List<PostModel> postsList = [];
   Map<String, List<String>> likes = {};
+  Map<String, int> comments = {};
+  List<String> likesUsersId = [];
 
   void getPosts(bool refresh) {
     postsList = [];
@@ -117,13 +124,14 @@ class PostCubit extends Cubit<PostAppStates> {
         .get()
         .then((value) {
       for (var element in value.docs) {
+        getPostsComments(element.id);
         getLikes(element.id).then((value) {
-          List<String> users = [];
+          likesUsersId = [];
           for (var element in value.docs) {
-            users.add(element.id);
+            likesUsersId.add(element.id);
           }
-          if (value.docs.length == users.length) {
-            likes.addAll({element.id: users});
+          if (value.docs.length == likesUsersId.length) {
+            likes.addAll({element.id: likesUsersId});
             emit(PostsLikesGetState());
           }
           postsList.add(PostModel.fromJson(element.data()));
@@ -132,6 +140,17 @@ class PostCubit extends Cubit<PostAppStates> {
           }
         });
       }
+    });
+  }
+
+  void getPostsComments(String postId) {
+    firebaseFirestore
+        .collection("Comments")
+        .doc(postId)
+        .collection("Comments")
+        .snapshots()
+        .listen((event) {
+      comments.addAll({postId: event.docs.length});
     });
   }
 

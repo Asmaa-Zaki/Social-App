@@ -26,8 +26,10 @@ class ChatCubit extends Cubit<ChatStates> {
     }
   }
 
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   Future uploadPostImage(String receiverId) {
-    return FirebaseStorage.instance
+    return _firebaseStorage
         .ref()
         .child(
             "Chats/$uId+$receiverId/${Uri(path: chatImage!.path).pathSegments.last}")
@@ -37,7 +39,7 @@ class ChatCubit extends Cubit<ChatStates> {
 
   Future addMessageToSender(MessageModel messageModel, String receiverId) {
     emit(MessageSendSuccess());
-    return FirebaseFirestore.instance
+    return _firebaseFirestore
         .collection("Chats")
         .doc(uId! + receiverId)
         .collection("messages")
@@ -45,7 +47,7 @@ class ChatCubit extends Cubit<ChatStates> {
   }
 
   Future addMessageToReceiver(MessageModel messageModel, String receiverId) {
-    return FirebaseFirestore.instance
+    return _firebaseFirestore
         .collection("Chats")
         .doc(receiverId + uId!)
         .collection("messages")
@@ -99,7 +101,7 @@ class ChatCubit extends Cubit<ChatStates> {
   List<MessageModel> messages = [];
   getMessages(String receiverId) {
     emit(GetChatLoading());
-    FirebaseFirestore.instance
+    _firebaseFirestore
         .collection("Chats")
         .doc(uId! + receiverId)
         .collection("messages")
@@ -115,6 +117,7 @@ class ChatCubit extends Cubit<ChatStates> {
   }
 
   final TextEditingController messageController = TextEditingController();
+
   void changeMessageIcon() {
     emit(ChangeMessageIcon());
   }

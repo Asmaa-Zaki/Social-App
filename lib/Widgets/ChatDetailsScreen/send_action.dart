@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../Models/UserModel/user_model.dart';
-import 'SendInputFields/VoiceAndSendButton.dart';
-import 'SendInputFields/send_input_field.dart';
+import '../SharedWidgets/MessagesAndCommentsInput/send_input_field.dart';
+import 'SendInputFields/voice_and_send_button.dart';
 
 class SendAction extends StatelessWidget {
   final UserModel receiver;
@@ -15,7 +16,9 @@ class SendAction extends StatelessWidget {
     return Row(
       children: [
         SendInputField(
-          image: image,
+          hideImage: image,
+          hideEmoji: false,
+          message: true,
         ),
         const SizedBox(
           width: 7,

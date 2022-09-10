@@ -11,7 +11,6 @@ class PostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textController = TextEditingController();
-    final now = DateTime.now();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -19,7 +18,6 @@ class PostScreen extends StatelessWidget {
         actions: [
           CreatePostButton(
             textController: textController,
-            now: now,
           )
         ],
       ),

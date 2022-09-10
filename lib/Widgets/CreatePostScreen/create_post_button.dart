@@ -7,10 +7,8 @@ import '../../ViewModels/Bloc/PostCubit/post_states.dart';
 
 class CreatePostButton extends StatelessWidget {
   final TextEditingController textController;
-  final DateTime now;
 
-  const CreatePostButton(
-      {Key? key, required this.textController, required this.now})
+  const CreatePostButton({Key? key, required this.textController})
       : super(key: key);
 
   @override
@@ -27,16 +25,16 @@ class CreatePostButton extends StatelessWidget {
               ? () {
                   if (PostCubit.get(context).postAssetPath == null) {
                     PostCubit.get(context).createPost(
-                      text: textController.text,
-                      dateTime: now.toString(),
-                    );
+                        text: textController.text,
+                        dateTime: DateTime.now().toString(),
+                        context: context);
                   } else {
                     {
                       PostCubit.get(context).createPostWithAsset(
                           text: textController.text.isEmpty
                               ? null
                               : textController.text,
-                          dateTime: now.toString(),
+                          dateTime: DateTime.now().toString(),
                           context: context);
                     }
                   }

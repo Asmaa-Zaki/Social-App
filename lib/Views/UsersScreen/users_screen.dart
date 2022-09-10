@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/Models/UserModel/user_model.dart';
 
 import '../../Widgets/BuildUserList/build_user_list.dart';
 
 class UsersScreen extends StatelessWidget {
-  const UsersScreen({Key? key}) : super(key: key);
+  final List<UserModel> users;
+  const UsersScreen({Key? key, required this.users}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(padding: EdgeInsets.all(8.0), child: AppUsers());
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("Likes"),
+        ),
+        body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AppUsers(
+              users: users,
+              startChat: false,
+            )));
   }
 }

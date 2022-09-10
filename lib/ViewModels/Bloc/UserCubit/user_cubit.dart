@@ -136,9 +136,9 @@ class UserCubit extends Cubit<UserStates> {
     });
   }
 
-  UserModel? postUser;
+  UserModel? userWithId;
   List<UserModel> allUsers = [];
-  UserModel? getPostOwner(String uId) {
+  UserModel? getUserWithId(String uId) {
     for (var element in users) {
       allUsers.add(element);
     }
@@ -146,10 +146,10 @@ class UserCubit extends Cubit<UserStates> {
     allUsers.add(user!);
     for (var element in allUsers) {
       if (element.uId == uId) {
-        postUser = element;
+        userWithId = element;
       }
     }
-    return postUser;
+    return userWithId;
   }
 
   updateProfileData(
@@ -295,4 +295,18 @@ class UserCubit extends Cubit<UserStates> {
   final nameController = TextEditingController();
   final dioController = TextEditingController();
   final phoneController = TextEditingController();
+
+  List<UserModel> likesUsers = [];
+  getPostLikesUsers(List<String> usersId) {
+    likesUsers = [];
+    for (var uElement in users) {
+      for (var element in usersId) {
+        if (uElement.uId == element) {
+          likesUsers.add(uElement);
+        } else if (uId == element) {
+          likesUsers.add(user!);
+        }
+      }
+    }
+  }
 }

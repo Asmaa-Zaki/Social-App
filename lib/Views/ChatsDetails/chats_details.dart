@@ -21,10 +21,6 @@ class ChatsDetails extends StatelessWidget {
       ChatCubit.get(context).getMessages(receiver.uId);
       return WillPopScope(
         onWillPop: () async {
-          /* if (ChatCubit.get(context).emojiHide == false) {
-
-            return false;
-          } else {*/
           ChatCubit.get(context).changeEmojiState(true);
           return true;
           //  }
@@ -50,7 +46,7 @@ class ChatsDetails extends StatelessWidget {
               const SizedBox(
                 height: 2,
               ),
-              BlocConsumer<ChatCubit, ChatStates>(
+              BlocBuilder<ChatCubit, ChatStates>(
                 builder: (context, state) {
                   return Offstage(
                     offstage: ChatCubit.get(context).emojiHide,
@@ -60,7 +56,6 @@ class ChatsDetails extends StatelessWidget {
                     ),
                   );
                 },
-                listener: (context, state) {},
               ),
             ],
           ),

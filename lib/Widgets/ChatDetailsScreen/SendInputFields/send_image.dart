@@ -10,24 +10,22 @@ class SendImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ChatCubit, ChatStates>(
-        builder: (context, state) {
-          if (ChatCubit.get(context).messageController.text.isEmpty) {
-            return IconButton(
-              icon: const Icon(
-                Icons.image,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                SystemChannels.textInput.invokeMethod('TextInput.hide');
-                ChatCubit.get(context).changeEmojiState(true);
-                ChatCubit.get(context).openGallery();
-              },
-            );
-          } else {
-            return const Text("");
-          }
-        },
-        listener: (context, state) {});
+    return BlocBuilder<ChatCubit, ChatStates>(builder: (context, state) {
+      if (ChatCubit.get(context).messageController.text.isEmpty) {
+        return IconButton(
+          icon: const Icon(
+            Icons.image,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            SystemChannels.textInput.invokeMethod('TextInput.hide');
+            ChatCubit.get(context).changeEmojiState(true);
+            ChatCubit.get(context).openGallery();
+          },
+        );
+      } else {
+        return const Text("");
+      }
+    });
   }
 }

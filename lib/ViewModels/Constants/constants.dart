@@ -10,3 +10,6 @@ Color defaultDarkColor = Colors.grey.shade900;
 
 final timeFormat = DateFormat.jm();
 final dateFormat = DateFormat.yMd();
+
+double? statusBarHeight;
+double? heightScreen;

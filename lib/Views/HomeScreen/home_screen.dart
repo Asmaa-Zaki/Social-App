@@ -38,7 +38,8 @@ class HomeScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     UserModel? user =
-                        UserCubit.get(context).getPostOwner(list[index].uId);
+                        UserCubit.get(context).getUserWithId(list[index].uId);
+
                     return Card(
                       margin: const EdgeInsets.symmetric(vertical: 3),
                       elevation: 5,
