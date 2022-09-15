@@ -10,8 +10,8 @@ class ShowSelectedAsset extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PostCubit postCubit = PostCubit.get(context);
-    return BlocBuilder<PostCubit, PostAppStates>(builder: (context, state) {
+    return BlocBuilder<PostCubit, PostStates>(builder: (context, state) {
+      PostCubit postCubit = PostCubit.get(context);
       if (postCubit.postAssetPath != null) {
         return SizedBox(
           height: 200,

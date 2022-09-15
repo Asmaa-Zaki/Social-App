@@ -23,7 +23,6 @@ class ChatsDetails extends StatelessWidget {
         onWillPop: () async {
           ChatCubit.get(context).changeEmojiState(true);
           return true;
-          //  }
         },
         child: Scaffold(
           key: ChatCubit.get(context).scaffoldKey,

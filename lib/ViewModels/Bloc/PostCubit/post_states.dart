@@ -1,27 +1,35 @@
-abstract class PostAppStates {}
+abstract class PostStates {}
 
-class PostAppInitState extends PostAppStates {}
+class PostAppInitState extends PostStates {}
 
-class PostGetImageState extends PostAppStates {}
+class PostGetAssetState extends PostStates {}
 
-class PostDeleteImageState extends PostAppStates {}
+class PostDeleteImageState extends PostStates {}
 
-class PostCreateLoadingState extends PostAppStates {}
+class PostCreateLoadingState extends PostStates {}
 
-class PostCreateSuccessState extends PostAppStates {}
+class PostCreateSuccessState extends PostStates {}
 
-class PostCreateErrorState extends PostAppStates {}
+class PostCreateErrorState extends PostStates {}
 
-class PostsGetLoadingState extends PostAppStates {}
+class PostsGetLoadingState extends PostStates {}
 
-class PostsGetSuccessState extends PostAppStates {}
+class PostsGetSuccessState extends PostStates {}
 
-class PostsGetErrorState extends PostAppStates {}
+class PostsGetErrorState extends PostStates {}
 
-class PostLikeSuccessState extends PostAppStates {}
+class PostLikeSuccessState extends PostStates {}
 
-class PostLikeErrorState extends PostAppStates {}
+class PostLikeErrorState extends PostStates {}
 
-class PostsLikesGetState extends PostAppStates {}
+class PostsLikesGetState extends PostStates {}
 
-class PostBodyChanged extends PostAppStates {}
+class PostBodyChanged extends PostStates {}
+
+class DownloadPostImageLoading extends PostStates {}
+
+class DownloadPostImageDone extends PostStates {}
+
+class DownloadPostImageFailed extends PostStates {}
+
+class GetPostImageSize extends PostStates {}

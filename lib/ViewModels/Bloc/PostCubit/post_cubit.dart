@@ -4,13 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_downloader/image_downloader.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_size_getter/file_input.dart';
+import 'package:image_size_getter/image_size_getter.dart';
 
 import '../../../Models/PostModel/post_model.dart';
 import '../../Constants/constants.dart';
 import 'post_states.dart';
 
-class PostCubit extends Cubit<PostAppStates> {
+class PostCubit extends Cubit<PostStates> {
   PostCubit() : super(PostAppInitState());
 
   static PostCubit get(context) => BlocProvider.of(context);
@@ -19,6 +22,7 @@ class PostCubit extends Cubit<PostAppStates> {
   File? postAssetPath;
   File? postAssetName;
   String? assetType;
+  Size? imageSize;
 
   void getPostImage() async {
     removePostAsset();
@@ -26,8 +30,9 @@ class PostCubit extends Cubit<PostAppStates> {
     if (pickedFile != null) {
       postAssetPath = File(pickedFile.path);
       postAssetName = File(pickedFile.name);
+      imageSize = ImageSizeGetter.getSize(FileInput(postAssetPath!));
       assetType = "image";
-      emit(PostGetImageState());
+      emit(PostGetAssetState());
     }
   }
 
@@ -38,7 +43,7 @@ class PostCubit extends Cubit<PostAppStates> {
       postAssetPath = File(pickedFile.path);
       postAssetName = File(pickedFile.name);
       assetType = "video";
-      emit(PostGetImageState());
+      emit(PostGetAssetState());
     }
   }
 
@@ -91,9 +96,10 @@ class PostCubit extends Cubit<PostAppStates> {
         text: text,
         dateTime: dateTime,
         postImage: postImage,
+        imageHeight: imageSize?.height,
+        imageWidth: imageSize?.width,
         postId: postId,
         postVideo: postVideo);
-    post.postId = postId;
     firebaseFirestore
         .collection("Posts")
         .doc(postId)
@@ -113,14 +119,14 @@ class PostCubit extends Cubit<PostAppStates> {
   List<String> likesUsersId = [];
 
   void getPosts(bool refresh) {
-    postsList = [];
-    likes = {};
+    postsList.clear();
+    likes.clear();
     if (refresh == false) {
       emit(PostsGetLoadingState());
     }
     firebaseFirestore
         .collection("Posts")
-        .orderBy("dateTime")
+        .orderBy("dateTime", descending: true)
         .get()
         .then((value) {
       for (var element in value.docs) {
@@ -225,5 +231,14 @@ class PostCubit extends Cubit<PostAppStates> {
 
   postBodyChanged() {
     emit(PostBodyChanged());
+  }
+
+  downloadPostImage(String postImage) {
+    emit(DownloadPostImageLoading());
+    ImageDownloader.downloadImage(postImage).then((value) {
+      emit(DownloadPostImageDone());
+    }).catchError((err) {
+      emit(DownloadPostImageFailed());
+    });
   }
 }

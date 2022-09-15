@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserStates>(builder: (context, state) {
-      return BlocBuilder<PostCubit, PostAppStates>(builder: (context, state) {
+      return BlocBuilder<PostCubit, PostStates>(builder: (context, state) {
         var list = PostCubit.get(context).postsList.reversed.toList();
         return ConditionalBuilder(
           condition: state is! PostsGetLoadingState,

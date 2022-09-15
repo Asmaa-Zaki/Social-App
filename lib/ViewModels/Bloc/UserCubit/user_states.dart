@@ -28,11 +28,11 @@ class UserLoginErrorState extends UserStates {
   UserLoginErrorState(this.errorMessage);
 }
 
-class UserGetLoadingState extends UserStates {}
+class GetCurrentUserLoadingState extends UserStates {}
 
-class UserGetSuccessState extends UserStates {}
+class GetCurrentUserSuccessState extends UserStates {}
 
-class UserGetErrorState extends UserStates {}
+class GetCurrentUserErrorState extends UserStates {}
 
 class UsersGetLoadingState extends UserStates {}
 
@@ -40,13 +40,9 @@ class UsersGetSuccessState extends UserStates {}
 
 class UsersGetErrorState extends UserStates {}
 
-class UserImageEditSuccessState extends UserStates {}
+class GetGalleryImageSuccessState extends UserStates {}
 
-class UserImageEditErrorState extends UserStates {}
-
-class UserCoverEditSuccessState extends UserStates {}
-
-class UserCoverEditErrorState extends UserStates {}
+class GetGalleryCoverSuccessState extends UserStates {}
 
 class UserImageUploadLoadingState extends UserStates {}
 
@@ -71,3 +67,5 @@ class UserLogoutSuccessState extends UserStates {}
 class UserPasswordVisibility extends UserStates {}
 
 class UserDataChanged extends UserStates {}
+
+class UserRemoveUpdates extends UserStates {}

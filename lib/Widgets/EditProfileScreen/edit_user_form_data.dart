@@ -1,49 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/ViewModels/Bloc/UserCubit/user_cubit.dart';
 
-import '../SharedWidgets/BuildText/build_text_form_field.dart';
+import '../SharedWidgets/BuildTextForm/build_text_form_field.dart';
 
 class EditUserFormData extends StatelessWidget {
-  final TextEditingController nameController;
-  final TextEditingController dioController;
-  final TextEditingController phoneController;
-
-  const EditUserFormData(
-      this.nameController, this.dioController, this.phoneController,
-      {Key? key})
-      : super(key: key);
+  final GlobalKey formKey;
+  const EditUserFormData({Key? key, required this.formKey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        BuildTextFormField(
-          controller: nameController,
-          label: "Name",
-          preFix: Icons.person,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        BuildTextFormField(
-          controller: dioController,
-          label: "Dio",
-          preFix: Icons.info,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        BuildTextFormField(
-          controller: phoneController,
-          label: "Phone",
-          preFix: Icons.phone,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-      ],
+    UserCubit userCubit = UserCubit.get(context);
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 15,
+          ),
+          BuildTextFormField(
+            controller: UserCubit.get(context).nameController,
+            label: "Name",
+            preFix: Icons.person,
+            onChange: (val) {
+              userCubit.userNewData();
+            },
+            validate: (val) {
+              if (val!.isEmpty) {
+                return "Name is required";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          BuildTextFormField(
+            controller: UserCubit.get(context).dioController,
+            label: "Dio",
+            preFix: Icons.info,
+            onChange: (val) {
+              userCubit.userNewData();
+            },
+            validate: (val) {
+              if (val!.isEmpty) {
+                return "Dio is required";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          BuildTextFormField(
+            controller: UserCubit.get(context).phoneController,
+            label: "Phone",
+            preFix: Icons.phone,
+            keyboard: TextInputType.phone,
+            onChange: (val) {
+              userCubit.userNewData();
+            },
+            validate: (val) {
+              if (val!.isEmpty) {
+                return "Phone is required";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
     );
   }
 }

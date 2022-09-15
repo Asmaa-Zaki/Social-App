@@ -13,6 +13,7 @@ class PostData extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Column(
       children: [
         if (list[index].text != null)
@@ -34,8 +35,9 @@ class PostData extends StatelessWidget {
             },
             child: Container(
               margin: const EdgeInsets.only(left: 8, right: 8, top: 10),
-              height: 300,
-              width: double.infinity,
+              height: (list[index].imageHeight! * screenWidth) /
+                  list[index].imageWidth!,
+              width: screenWidth,
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(5)),
                   image: DecorationImage(

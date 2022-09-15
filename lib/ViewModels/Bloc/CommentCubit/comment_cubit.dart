@@ -29,6 +29,10 @@ class CommentCubit extends Cubit<CommentStates> {
     }
   }
 
+  void showSelectedImage() {
+    emit(GalleryImageShown());
+  }
+
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 

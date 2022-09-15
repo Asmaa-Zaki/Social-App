@@ -29,6 +29,7 @@ class AddImage extends StatelessWidget {
       }
     }, listener: (context, state) {
       if (state is GalleryFileSelected) {
+        FocusScope.of(context).unfocus();
         buildPush(context, const ShowImageSelected());
       }
     });

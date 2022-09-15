@@ -4,7 +4,9 @@ import '../../../ViewModels/Constants/constants.dart';
 
 darkTheme() {
   return ThemeData(
+      brightness: Brightness.dark,
       primaryColor: firstDefaultColor,
+      snackBarTheme: const SnackBarThemeData(backgroundColor: Colors.black),
       primarySwatch: Colors.blueGrey,
       appBarTheme: AppBarTheme(backgroundColor: defaultDarkColor, elevation: 1),
       inputDecorationTheme: const InputDecorationTheme(
@@ -24,6 +26,11 @@ darkTheme() {
       primaryColorDark: defaultDarkColor,
       scaffoldBackgroundColor: defaultDarkColor,
       iconTheme: const IconThemeData(color: Colors.white),
+      dialogTheme: DialogTheme(
+        backgroundColor: defaultDarkColor,
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 21),
+        contentTextStyle: const TextStyle(color: Colors.grey, fontSize: 17),
+      ),
       textTheme: const TextTheme(
         bodyText1: TextStyle(),
         bodyText2: TextStyle(),

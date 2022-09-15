@@ -41,4 +41,10 @@ class VideoCubit extends Cubit<VideoStates> {
         emit(VideoInitializedError());
       });
   }
+
+  @override
+  Future<void> close() {
+    controller.dispose();
+    return super.close();
+  }
 }

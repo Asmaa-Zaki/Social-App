@@ -15,7 +15,7 @@ class AddLike extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(onTap: () {
       PostCubit.get(context).likePost(post.postId);
-    }, child: BlocBuilder<PostCubit, PostAppStates>(builder: (context, state) {
+    }, child: BlocBuilder<PostCubit, PostStates>(builder: (context, state) {
       List<String>? likes = PostCubit.get(context).likes[post.postId];
       bool ownerLikeThePost = false;
       likes?.forEach((element) {

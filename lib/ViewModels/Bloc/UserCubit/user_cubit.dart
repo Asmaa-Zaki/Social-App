@@ -108,15 +108,22 @@ class UserCubit extends Cubit<UserStates> {
     });
   }
 
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController dioController = TextEditingController();
+
   void getUser() {
-    emit(UserGetLoadingState());
+    emit(GetCurrentUserLoadingState());
     FirebaseFirestore.instance.collection("Users").doc(uId).get().then((value) {
       if (value.data() != null) {
         user = UserModel.fromJson(value.data()!);
+        nameController.text = user!.name;
+        dioController.text = user!.dio;
+        phoneController.text = user!.phone;
       }
-      emit(UserGetSuccessState());
+      emit(GetCurrentUserSuccessState());
     }).catchError((err) {
-      emit(UserGetErrorState());
+      emit(GetCurrentUserErrorState());
     });
   }
 
@@ -152,31 +159,55 @@ class UserCubit extends Cubit<UserStates> {
     return userWithId;
   }
 
-  updateProfileData(
-      {required String name,
-      required String phone,
-      required String dio,
-      String? image,
-      String? cover}) {
-    emit(UserProfileUpdateLoadingState());
+  bool showUpdateButton = false;
+  void userNewData() {
+    showUpdateButton = false;
+    emit(UserDataChanged());
+    if (nameController.text != user?.name ||
+        dioController.text != user?.dio ||
+        phoneController.text != user?.phone) {
+      showUpdateButton = true;
+      emit(UserDataChanged());
+    }
+  }
+
+  void userRemoveUpdates() {
+    nameController.text = user!.name;
+    dioController.text = user!.dio;
+    phoneController.text = user!.phone;
+    showUpdateButton = false;
+    image = null;
+    cover = null;
+    emit(UserRemoveUpdates());
+  }
+
+  updateProfileData({String? image, String? cover, required bool updateImage}) {
+    if (updateImage == false) {
+      emit(UserProfileUpdateLoadingState());
+    }
     user = UserModel(
-        name: name,
+        name: nameController.text,
         email: user!.email,
-        phone: phone,
+        phone: phoneController.text,
         password: user!.password,
         image: image ?? user!.image,
         cover: cover ?? user!.cover,
-        dio: dio,
+        dio: dioController.text,
         uId: uId!);
     FirebaseFirestore.instance
         .collection("Users")
         .doc(uId)
         .update(user!.toMap())
         .then((value) {
-      emit(UserProfileUpdateSuccessState());
+      if (updateImage == false) {
+        showUpdateButton = false;
+        emit(UserProfileUpdateSuccessState());
+      }
       getUser();
     }).catchError((err) {
-      emit(UserProfileUpdateErrorState());
+      if (updateImage == false) {
+        emit(UserProfileUpdateErrorState());
+      }
     });
   }
 
@@ -188,9 +219,7 @@ class UserCubit extends Cubit<UserStates> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       image = File(pickedFile.path);
-      emit(UserImageEditSuccessState());
-    } else {
-      emit(UserImageEditErrorState());
+      emit(GetGalleryImageSuccessState());
     }
   }
 
@@ -198,9 +227,7 @@ class UserCubit extends Cubit<UserStates> {
     final pickedCover = await picker.pickImage(source: ImageSource.gallery);
     if (pickedCover != null) {
       cover = File(pickedCover.path);
-      emit(UserCoverEditSuccessState());
-    } else {
-      emit(UserCoverEditErrorState());
+      emit(GetGalleryCoverSuccessState());
     }
   }
 
@@ -209,48 +236,42 @@ class UserCubit extends Cubit<UserStates> {
     return storage.ref().child("Users/$type/$uId").listAll();
   }
 
-  Future deletePrefImage(String profile, String type) {
+  Future deletePrevImage(String profile, String type) {
     return storage.ref().child("Users/$type/$uId/$profile").delete();
   }
 
-  Future uploadNewImage(
-      String name, String phone, String dio, bool profileImage) {
+  Future uploadNewImage(bool profileImage) {
     return storage
         .ref()
         .child(
             "Users/${profileImage ? "Profiles" : "Covers"}/$uId/${Uri.file(profileImage ? image!.path : cover!.path).pathSegments.last}")
         .putFile(profileImage ? image! : cover!)
         .then((value) {
-      profileImage
-          ? emit(UserImageUploadSuccessState())
-          : emit(UserCoverEditSuccessState());
       value.ref.getDownloadURL().then((value) {
         profileImage ? image = null : cover = null;
         updateProfileData(
-            name: name,
-            phone: phone,
-            dio: dio,
+            updateImage: true,
             image: profileImage ? value : null,
             cover: !profileImage ? value : null);
       });
     });
   }
 
-  updateProfileImage(String name, String phone, String dio) {
+  updateProfileImage() {
     emit(UserImageUploadLoadingState());
     getCurrentImage("Profiles").then((value) {
       if (value.items.isNotEmpty) {
-        deletePrefImage(
+        deletePrevImage(
                 Uri.file(value.items[0].fullPath).pathSegments.last, "Profiles")
             .then((value) {
-          uploadNewImage(name, phone, dio, true).then((value) {
+          uploadNewImage(true).then((value) {
             emit(UserImageUploadSuccessState());
           }).catchError((err) {
             emit(UserImageUploadErrorState());
           });
         });
       } else {
-        uploadNewImage(name, phone, dio, true).then((value) {
+        uploadNewImage(true).then((value) {
           emit(UserImageUploadSuccessState());
         }).catchError((err) {
           emit(UserImageUploadErrorState());
@@ -259,21 +280,21 @@ class UserCubit extends Cubit<UserStates> {
     });
   }
 
-  updateProfileCover(String name, String phone, String dio) {
+  updateProfileCover() {
     emit(UserCoverUploadLoadingState());
     getCurrentImage("Covers").then((value) {
       if (value.items.isNotEmpty) {
-        deletePrefImage(
+        deletePrevImage(
                 Uri.file(value.items[0].fullPath).pathSegments.last, "Covers")
             .then((value) {
-          uploadNewImage(name, phone, dio, false).then((value) {
+          uploadNewImage(false).then((value) {
             emit(UserCoverUploadSuccessState());
           }).catchError((error) {
             emit(UserCoverUploadErrorState());
           });
         });
       } else {
-        uploadNewImage(name, phone, dio, false).then((value) {
+        uploadNewImage(false).then((value) {
           emit(UserCoverUploadSuccessState());
         }).catchError((error) {
           emit(UserCoverUploadErrorState());
@@ -287,14 +308,6 @@ class UserCubit extends Cubit<UserStates> {
       emit(UserLogoutSuccessState());
     });
   }
-
-  void userDataChanged() {
-    emit(UserDataChanged());
-  }
-
-  final nameController = TextEditingController();
-  final dioController = TextEditingController();
-  final phoneController = TextEditingController();
 
   List<UserModel> likesUsers = [];
   getPostLikesUsers(List<String> usersId) {

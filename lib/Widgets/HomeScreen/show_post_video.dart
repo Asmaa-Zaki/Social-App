@@ -1,6 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/ViewModels/Bloc/ThemeCubit/theme_cubit.dart';
 import 'package:social_app/ViewModels/Bloc/VideoCubit/video_cubit.dart';
 import 'package:social_app/ViewModels/Bloc/VideoCubit/video_states.dart';
 
@@ -22,12 +23,17 @@ class DisplayVideo extends StatelessWidget {
         body: BlocBuilder<VideoCubit, VideoStates>(builder: (context, state) {
           var videoCubit = VideoCubit.get(context);
           var _controller = videoCubit.controller;
-          return Center(
-            child: _controller.value.isInitialized
-                ? Chewie(
-                    controller: VideoCubit.get(context).chewieController,
-                  )
-                : Container(),
+          return Theme(
+            data: ThemeCubit.get(context).darkTheme
+                ? ThemeData.dark()
+                : ThemeData.light(),
+            child: Center(
+              child: _controller.value.isInitialized
+                  ? Chewie(
+                      controller: VideoCubit.get(context).chewieController,
+                    )
+                  : Container(),
+            ),
           );
         }),
       ),

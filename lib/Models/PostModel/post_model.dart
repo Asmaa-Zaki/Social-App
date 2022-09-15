@@ -5,10 +5,14 @@ class PostModel {
   String? postVideo;
   late String dateTime;
   late String postId;
+  int? imageHeight;
+  int? imageWidth;
 
   PostModel(
       {required this.uId,
       this.postImage,
+      this.imageHeight,
+      this.imageWidth,
       this.text,
       required this.dateTime,
       this.postVideo,
@@ -21,6 +25,8 @@ class PostModel {
     dateTime = data["dateTime"];
     postId = data['postId'];
     postVideo = data["postVideo"];
+    imageHeight = data["imageHeight"];
+    imageWidth = data["imageWidth"];
   }
 
   Map<String, dynamic> toMap() {
@@ -30,7 +36,9 @@ class PostModel {
       "postImage": postImage,
       "text": text,
       "postId": postId,
-      "postVideo": postVideo
+      "postVideo": postVideo,
+      "imageHeight": imageHeight,
+      "imageWidth": imageWidth
     };
   }
 }

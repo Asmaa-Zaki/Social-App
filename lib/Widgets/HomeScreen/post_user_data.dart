@@ -36,10 +36,6 @@ class UserData extends StatelessWidget {
             timeFormat.format(DateTime.parse(dateTime)),
         style: TextStyle(color: Theme.of(context).textTheme.subtitle1?.color),
       ),
-      trailing: Icon(
-        Icons.more_horiz_sharp,
-        color: Theme.of(context).iconTheme.color,
-      ),
     );
   }
 }

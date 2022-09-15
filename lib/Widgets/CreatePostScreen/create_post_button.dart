@@ -13,7 +13,7 @@ class CreatePostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<PostCubit, PostAppStates>(builder: (context, state) {
+    return BlocConsumer<PostCubit, PostStates>(builder: (context, state) {
       if (state is PostCreateLoadingState) {
         return const Text("");
       }

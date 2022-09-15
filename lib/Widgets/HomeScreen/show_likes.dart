@@ -15,7 +15,7 @@ class ShowLikes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostCubit, PostAppStates>(builder: (context, state) {
+    return BlocBuilder<PostCubit, PostStates>(builder: (context, state) {
       List<String>? likes = PostCubit.get(context).likes[post.postId];
       String? likesCount = likes?.length.toString();
 

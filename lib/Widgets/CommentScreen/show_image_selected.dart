@@ -11,9 +11,9 @@ class ShowImageSelected extends StatelessWidget {
     CommentCubit.get(context).changeKeyboardState(false);
     return WillPopScope(
       onWillPop: () async {
+        CommentCubit.get(context).changeMessageIcon();
         CommentCubit.get(context).commentImagePath = null;
         CommentCubit.get(context).commentController.clear();
-        CommentCubit.get(context).changeMessageIcon();
         return true;
       },
       child: PersistentKeyboardHeightProvider(

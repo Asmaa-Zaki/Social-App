@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/ViewModels/Bloc/UserCubit/user_cubit.dart';
 import 'package:social_app/ViewModels/Bloc/UserCubit/user_states.dart';
 
-import '../SharedWidgets/BuildText/build_text_form_field.dart';
+import '../SharedWidgets/BuildTextForm/build_text_form_field.dart';
 
 class SignInInputFields extends StatelessWidget {
   final TextEditingController emailController;
