@@ -60,9 +60,7 @@ class SignInActions extends StatelessWidget {
                 if (state is UserLoginSuccessState) {
                   buildPushReplacement(context, const SocialLayout());
                 } else if (state is UserLoginErrorState) {
-                  SnackBar snackBar =
-                      SnackBar(content: Text(state.errorMessage));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  showSnackBar(context, state.errorMessage);
                 }
               },
             ),

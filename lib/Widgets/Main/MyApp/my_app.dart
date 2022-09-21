@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/ViewModels/Bloc/FriendBloc/friend_cubit.dart';
 
 import '../../../ViewModels/Bloc/ChatCubit/chat_cubit.dart';
 import '../../../ViewModels/Bloc/CommentCubit/comment_cubit.dart';
@@ -34,7 +35,9 @@ class MyApp extends StatelessWidget {
                 ..getUser()
                 ..getUsers()),
           BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
-          BlocProvider<CommentCubit>(create: (context) => CommentCubit())
+          BlocProvider<CommentCubit>(create: (context) => CommentCubit()),
+          BlocProvider<FriendCubit>(
+              create: (context) => FriendCubit()..getAllFriendsDetails()),
         ],
         child: BlocBuilder<ThemeCubit, ThemeStates>(
           builder: (context, state) {

@@ -3,9 +3,9 @@ import 'package:social_app/Models/UserModel/user_model.dart';
 
 import '../../Widgets/BuildUserList/build_user_list.dart';
 
-class UsersScreen extends StatelessWidget {
+class ShowLikesUsers extends StatelessWidget {
   final List<UserModel> users;
-  const UsersScreen({Key? key, required this.users}) : super(key: key);
+  const ShowLikesUsers({Key? key, required this.users}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,8 @@ class UsersScreen extends StatelessWidget {
         body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: AppUsers(
-              users: users,
-              startChat: false,
+              usersList: users,
+              showLikes: true,
             )));
   }
 }

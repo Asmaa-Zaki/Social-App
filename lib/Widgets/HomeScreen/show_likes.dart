@@ -6,7 +6,7 @@ import '../../Models/PostModel/post_model.dart';
 import '../../ViewModels/Bloc/PostCubit/post_cubit.dart';
 import '../../ViewModels/Bloc/UserCubit/user_cubit.dart';
 import '../../ViewModels/Components/Components.dart';
-import '../../Views/UsersScreen/users_screen.dart';
+import '../../Views/LikesUsersScreen/likes_users_screen.dart';
 
 class ShowLikes extends StatelessWidget {
   final PostModel post;
@@ -24,7 +24,7 @@ class ShowLikes extends StatelessWidget {
             UserCubit.get(context).getPostLikesUsers(likes ?? []);
             buildPush(
                 context,
-                UsersScreen(
+                ShowLikesUsers(
                   users: UserCubit.get(context).likesUsers,
                 ));
           },

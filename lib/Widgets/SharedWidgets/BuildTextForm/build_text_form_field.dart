@@ -37,7 +37,6 @@ class BuildTextFormField extends StatelessWidget {
         hintText: placeholder,
         label: Text(
           label!,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         prefixIcon: preFix == null ? null : Icon(preFix),
         suffixIcon: InkWell(

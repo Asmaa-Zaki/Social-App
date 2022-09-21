@@ -69,3 +69,5 @@ class UserPasswordVisibility extends UserStates {}
 class UserDataChanged extends UserStates {}
 
 class UserRemoveUpdates extends UserStates {}
+
+class GetUsersWithoutFriends extends UserStates {}
