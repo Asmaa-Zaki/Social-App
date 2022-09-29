@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
           BlocProvider<CommentCubit>(create: (context) => CommentCubit()),
           BlocProvider<FriendCubit>(
-              create: (context) => FriendCubit()..getAllFriendsDetails()),
+              create: (context) => FriendCubit()..getAllFriendsDetails(false)),
         ],
         child: BlocBuilder<ThemeCubit, ThemeStates>(
           builder: (context, state) {

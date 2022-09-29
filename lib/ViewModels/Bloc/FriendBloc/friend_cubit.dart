@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/ViewModels/Bloc/FriendBloc/friend_states.dart';
@@ -16,7 +15,7 @@ class FriendCubit extends Cubit<FriendStates> {
     _addFriendInSent(userId).then((value) {
       _addFriendInReceive(userId).then((value) {
         emit(AddFriendSuccess());
-        getAllFriendsDetails();
+        getAllFriendsDetails(false);
       });
     });
   }
@@ -39,37 +38,43 @@ class FriendCubit extends Cubit<FriendStates> {
         .set({"userId": uId});
   }
 
-  void removeFriend(String userId, bool friendReq) {
+  void removeFriend(String userId, bool friendReq, bool removeReq) {
     _removeFriendInSent(userId, friendReq).then((value) {
       _removeFriendInReceive(userId, friendReq).then((value) {
-        emit(RemoveFriendSuccess());
-        getAllFriendsDetails();
+        if (removeReq || !friendReq) {
+          requests.remove(userId);
+          emit(RemoveFriendSuccess());
+        }
+        if (!removeReq && friendReq) {
+          emit(AcceptFriendSuccess(userId));
+        }
+        getAllFriendsDetails(friendReq);
       });
     });
   }
 
-  Future<void> _removeFriendInSent(String userId, bool acceptReq) {
+  Future<void> _removeFriendInSent(String userId, bool friendReq) {
     return _firebaseFirestore
         .collection("Friends")
-        .doc(acceptReq ? userId : uId)
+        .doc(friendReq ? userId : uId)
         .collection("Sent")
-        .doc(acceptReq ? uId : userId)
+        .doc(friendReq ? uId : userId)
         .delete();
   }
 
-  Future<void> _removeFriendInReceive(String userId, bool acceptReq) {
+  Future<void> _removeFriendInReceive(String userId, bool friendReq) {
     return _firebaseFirestore
         .collection("Friends")
-        .doc(acceptReq ? uId : userId)
+        .doc(friendReq ? uId : userId)
         .collection("Received")
-        .doc(acceptReq ? userId : uId)
+        .doc(friendReq ? userId : uId)
         .delete();
   }
 
-  void acceptFriend(String userId) {
+  void acceptFriend(String userId, BuildContext context) {
     addToMyFriendList(userId).then((value) {
       addToSenderFriendList(userId).then((value) {
-        removeFriend(userId, true);
+        removeFriend(userId, true, false);
       });
     });
   }
@@ -94,28 +99,56 @@ class FriendCubit extends Cubit<FriendStates> {
 
   Map<String, String> requests = {};
   List<String> acceptedFriends = [];
-  getAllFriendsDetails() {
-    requests.clear();
+  List<String> tempAcceptedFriends = [];
+  getAllFriendsDetails(bool friendReq, {bool loading = false}) {
     acceptedFriends.clear();
-    _getAcceptedRequests().then((value) {
+    if (loading) emit(GetFriendsLoading());
+    _getReceivedRequests().then((value) {
+      friendsCollectionEmpty(value, friendReq, "receive");
       for (var element in value.docs) {
-        requests.addAll({element.id: "Accepted"});
-        acceptedFriends.add(element.id);
-        emit(GetAllRequestsSuccess());
+        requests.addAll({element.id: "Received"});
+        if (!friendReq) {
+          emit(GetFriendReceivedSuccess());
+        }
       }
     });
     _getSentRequests().then((value) {
+      friendsCollectionEmpty(value, friendReq, "sent");
       for (var element in value.docs) {
         requests.addAll({element.id: "Sent"});
-        emit(GetAllRequestsSuccess());
+        if (!friendReq) {
+          emit(GetFriendSentSuccess());
+        }
       }
     });
-    _getReceivedRequests().then((value) {
+    _getAcceptedRequests().then((value) {
+      friendsCollectionEmpty(value, friendReq, "accepted");
       for (var element in value.docs) {
-        requests.addAll({element.id: "Received"});
-        emit(GetAllRequestsSuccess());
+        requests.addAll({element.id: "Accepted"});
+        acceptedFriends.add(element.id);
+        tempAcceptedFriends.add(element.id);
+        if (!friendReq) {
+          emit(GetFriendAcceptedSuccess());
+        }
       }
     });
+  }
+
+  friendsCollectionEmpty(var value, bool friendReq, String type) {
+    if (value.docs.length == 0) {
+      if (!friendReq) {
+        switch (type) {
+          case "sent":
+            emit(GetFriendSentSuccess());
+            break;
+          case "receive":
+            emit(GetFriendReceivedSuccess());
+            break;
+          case "accepted":
+            emit(GetFriendAcceptedSuccess());
+        }
+      }
+    }
   }
 
   Future _getSentRequests() {

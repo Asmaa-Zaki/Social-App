@@ -11,7 +11,7 @@ class NavigationCubit extends Cubit<NavigationState> {
   static NavigationCubit get(BuildContext context) => BlocProvider.of(context);
 
   int currentIndex = 0;
-  
+
   List<Widget> screens = [
     const HomeScreen(),
     //const ChatsScreen(),

@@ -329,6 +329,7 @@ class UserCubit extends Cubit<UserStates> {
     if (friends.isEmpty) {
       for (var element in users) {
         usersWithoutFriendsList.add(element);
+        emit(GetUsersWithoutFriends());
       }
     } else {
       for (var element in users) {
@@ -342,8 +343,10 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  List<UserModel> getFriendsUsers(List<String> friends) {
-    List<UserModel> friendsList = [];
+  List<UserModel> friendsList = [];
+
+  void getFriendsUsers(List<String> friends) {
+    friendsList.clear();
     for (var element in users) {
       for (var fElement in friends) {
         if (element.uId == fElement) {
@@ -351,6 +354,5 @@ class UserCubit extends Cubit<UserStates> {
         }
       }
     }
-    return friendsList;
   }
 }

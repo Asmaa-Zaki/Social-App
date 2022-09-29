@@ -26,18 +26,18 @@ class MessagesList extends StatelessWidget {
           child: GroupedListView<dynamic, String>(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               elements: messages,
-              groupBy: (element) =>
-                  dateFormat.format(DateTime.parse(element.dateTime)),
+              groupBy: (element) => element.dateTime.split(" ")[0],
               groupSeparatorBuilder: (String groupByValue) => Align(
                     alignment: Alignment.topCenter,
                     child: IntrinsicWidth(
                       child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius: BorderRadius.circular(5)),
                           padding: const EdgeInsets.all(7),
                           child: Text(
-                            groupByValue,
+                            dateFormat.format(DateTime.parse(groupByValue)),
                             style: const TextStyle(color: Colors.white),
                           )),
                     ),
