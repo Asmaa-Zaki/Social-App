@@ -2,11 +2,12 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/Models/UserModel/user_model.dart';
-import 'package:social_app/ViewModels/Bloc/FriendBloc/friend_cubit.dart';
-import 'package:social_app/ViewModels/Bloc/FriendBloc/friend_states.dart';
+import 'package:social_app/ViewModels/Bloc/FriendCubit/friend_cubit.dart';
+import 'package:social_app/ViewModels/Bloc/FriendCubit/friend_states.dart';
 import 'package:social_app/ViewModels/Bloc/UserCubit/user_states.dart';
 
 import '../../ViewModels/Bloc/UserCubit/user_cubit.dart';
+import '../../ViewModels/Constants/constants.dart';
 
 class AppUsers extends StatelessWidget {
   final List<UserModel>? usersList;
@@ -55,10 +56,12 @@ class AppUsers extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        if (_friendCubit.requests[users[index].uId] == null)
+                        if (_friendCubit.requests[users[index].uId] == null &&
+                            users[index].uId != uId)
                           IconButton(
                               onPressed: () {
-                                _friendCubit.addFriend(users[index].uId);
+                                _friendCubit.addFriend(
+                                    users[index].uId, context);
                               },
                               icon: const Icon(Icons.person_add_alt_1)),
                         if (_friendCubit.requests[users[index].uId] == "Sent")

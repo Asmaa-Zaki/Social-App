@@ -24,33 +24,33 @@ class VoiceAndSendButton extends StatelessWidget {
             ChatCubit.get(context).messageController;
 
         return Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.blueGrey[900],
-          ),
-          child: IconButton(
-            padding: EdgeInsets.zero,
-            icon: messageController.text.isNotEmpty || image == true
-                ? const Icon(Icons.send, color: Colors.white)
-                : const Icon(Icons.keyboard_voice, color: Colors.white),
-            onPressed: messageController.text.isNotEmpty || image == true
-                ? () {
-                    ChatCubit.get(context).sendMessage(
-                      message: messageController.text.isNotEmpty
-                          ? messageController.text
-                          : null,
-                      receiverId: receiver.uId,
-                      dateTime: DateTime.now().toString(),
-                    );
-                    messageController.text = "";
-                    if (image == true) {
-                      Navigator.pop(context);
-                    }
-                  }
-                : () {},
-          ),
-        );
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.blueGrey[900],
+            ),
+            child: state is! MessageSendingLoading
+                ? IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: messageController.text.isNotEmpty || image == true
+                        ? const Icon(Icons.send, color: Colors.white)
+                        : const Icon(Icons.keyboard_voice, color: Colors.white),
+                    onPressed:
+                        messageController.text.isNotEmpty || image == true
+                            ? () {
+                                ChatCubit.get(context).sendMessage(
+                                  message: messageController.text.isNotEmpty
+                                      ? messageController.text
+                                      : null,
+                                  receiverId: receiver.uId,
+                                  dateTime: DateTime.now().toString(),
+                                  context: context,
+                                );
+                                messageController.text = "";
+                              }
+                            : () {},
+                  )
+                : const CircularProgressIndicator());
       }, listener: (context, state) {
         if (state is GalleryFileSelected) {
           buildPush(

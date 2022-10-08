@@ -15,10 +15,31 @@ class LayoutAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state) {
+        int currentIndex = NavigationCubit.get(context).currentIndex;
+        List<BottomNavigationBarItem> items = [
+          const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(
+              icon: Stack(
+                alignment: AlignmentDirectional.topEnd,
+                children: [
+                  const Icon(Icons.notifications),
+                  if (NavigationCubit.newNotifications)
+                    const CircleAvatar(
+                      radius: 4,
+                      backgroundColor: Colors.blue,
+                    )
+                ],
+              ),
+              label: "Notifications"),
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.menu), label: "Settings"),
+        ];
+        //  remember to edit items
+        //  List<BottomNavigationBarItem> items= NavigationCubit.get(context).items;
         return SafeArea(
           child: Column(
             children: [
-              if (NavigationCubit.get(context).currentIndex != 1)
+              if (currentIndex == 0)
                 SizedBox(
                     height: 50,
                     child: Row(children: [
@@ -80,7 +101,7 @@ class LayoutAppbar extends StatelessWidget {
                                 Colors.black))),
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
-                  items: NavigationCubit.get(context).items,
+                  items: items,
                   currentIndex: NavigationCubit.get(context).currentIndex,
                   onTap: (val) {
                     NavigationCubit.get(context).changeIndex(val, context);

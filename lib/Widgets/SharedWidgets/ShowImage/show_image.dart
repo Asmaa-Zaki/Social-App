@@ -51,7 +51,11 @@ class ShowImage extends StatelessWidget {
                 ),
               ),
             ),
-            Center(child: Image.network(url)),
+            Expanded(
+              child: Center(
+                child: Image.network(url),
+              ),
+            ),
             Container()
           ],
         ),

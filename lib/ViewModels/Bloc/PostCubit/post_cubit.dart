@@ -8,6 +8,8 @@ import 'package:image_downloader/image_downloader.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart';
+import 'package:social_app/ViewModels/Bloc/UserCubit/user_cubit.dart';
+import 'package:social_app/ViewModels/Components/components.dart';
 
 import '../../../Models/PostModel/post_model.dart';
 import '../../Constants/constants.dart';
@@ -118,6 +120,10 @@ class PostCubit extends Cubit<PostStates> {
   Map<String, int> comments = {};
   List<String> likesUsersId = [];
 
+  getPost(String postId) {
+    return postsList.firstWhere((element) => element.postId == postId);
+  }
+
   void getPosts(bool refresh) {
     postsList.clear();
     likes.clear();
@@ -160,51 +166,63 @@ class PostCubit extends Cubit<PostStates> {
     });
   }
 
-  void likePost(String postId) {
+  void likePost(PostModel post, BuildContext context) {
     bool ownerLikeThePost = false;
-    if (likes[postId] != null) {
-      int length = likes[postId]!.length;
+    if (likes[post.postId] != null) {
+      int length = likes[post.postId]!.length;
       if (length == 0) {
-        addLike(postId);
+        addLike(post, context);
       }
-      for (String element in likes[postId]!) {
+      for (String element in likes[post.postId]!) {
         if (element == uId) {
           ownerLikeThePost = true;
-          removeLike(postId);
+          removeLike(post);
           break;
         } else {
           ownerLikeThePost = false;
         }
-        if (likes[postId]?.indexOf(element) == length - 1 &&
+        if (likes[post.postId]?.indexOf(element) == length - 1 &&
             ownerLikeThePost == false) {
-          addLike(postId);
+          addLike(post, context);
         }
       }
     }
   }
 
-  void addLike(String postId) {
+  void addLike(PostModel post, BuildContext context) {
+    UserCubit.get(context).getActiveDevices(post.uId);
     firebaseFirestore
         .collection("Likes")
-        .doc(postId)
+        .doc(post.postId)
         .collection("Users")
         .doc(uId)
         .set({"userId": uId}).then((value) {
+      if (uId != post.uId) {
+        sendNotification(
+            context: context,
+            body: "${UserCubit.get(context).user!.name} likes your post",
+            title: "Post Updates",
+            userId: post.uId,
+            postId: post.postId,
+            screen: 'postScreen');
+        addNotificationToFirebase(post.uId, "likes your post", uId!);
+      }
       emit(PostLikeSuccessState());
-      getLikes(postId).then((value) => updateLikes(postId));
+      getLikes(post.postId).then((value) => updateLikes(post.postId));
     });
   }
 
-  void removeLike(String postId) {
+  void removeLike(PostModel post) {
     firebaseFirestore
         .collection("Likes")
-        .doc(postId)
+        .doc(post.postId)
         .collection("Users")
         .doc(uId)
         .delete()
         .then((value) {
+      removeNotificationFromFirebase(post.uId, post.postId, "likes your post");
       PostLikeSuccessState();
-      getLikes(postId).then((value) => updateLikes(postId));
+      getLikes(post.postId).then((value) => updateLikes(post.postId));
     });
   }
 

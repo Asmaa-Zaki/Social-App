@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/ViewModels/Bloc/FriendBloc/friend_cubit.dart';
+import 'package:social_app/ViewModels/Bloc/FriendCubit/friend_cubit.dart';
 
 import '../../../ViewModels/Bloc/ChatCubit/chat_cubit.dart';
 import '../../../ViewModels/Bloc/CommentCubit/comment_cubit.dart';
@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         child: BlocBuilder<ThemeCubit, ThemeStates>(
           builder: (context, state) {
             return MaterialApp(
+              navigatorKey: navigatorKey,
               debugShowCheckedModeBanner: false,
               home: currentWidget,
               darkTheme: darkTheme(),

@@ -25,7 +25,7 @@ class ShowLikes extends StatelessWidget {
             buildPush(
                 context,
                 ShowLikesUsers(
-                  users: UserCubit.get(context).likesUsers,
+                  users: UserCubit.get(context).likesUsers.toList(),
                 ));
           },
           child: Padding(

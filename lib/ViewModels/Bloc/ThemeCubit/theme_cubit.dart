@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../Local/CacheHelper.dart';
+import '../../Local/cache_helper.dart';
 import 'theme_states.dart';
 
 class ThemeCubit extends Cubit<ThemeStates> {

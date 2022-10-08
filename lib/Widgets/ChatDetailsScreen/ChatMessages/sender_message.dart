@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:social_app/ViewModels/Components/components.dart';
 
 import '../../SharedWidgets/ShowImage/show_image.dart';
@@ -16,6 +17,8 @@ class SenderMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool rtl = intl.Bidi.detectRtlDirectionality(messageTxt ?? '');
+
     return Align(
         alignment: AlignmentDirectional.centerEnd,
         child: IntrinsicWidth(
@@ -52,6 +55,9 @@ class SenderMessage extends StatelessWidget {
                                 alignment: Alignment.centerRight,
                                 child: Text(
                                   messageTxt!,
+                                  textDirection: rtl
+                                      ? TextDirection.rtl
+                                      : TextDirection.ltr,
                                   style: const TextStyle(
                                       fontSize: 16, color: Colors.white),
                                 ),
@@ -61,6 +67,8 @@ class SenderMessage extends StatelessWidget {
                               alignment: Alignment.bottomRight,
                               child: Text(
                                 messageTime,
+                                textDirection:
+                                    rtl ? TextDirection.rtl : TextDirection.ltr,
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey[400],

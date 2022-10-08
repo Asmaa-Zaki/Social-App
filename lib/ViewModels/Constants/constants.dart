@@ -13,3 +13,5 @@ final dateFormat = DateFormat.yMd();
 
 double? statusBarHeight;
 double? heightScreen;
+String? deviceToken;
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

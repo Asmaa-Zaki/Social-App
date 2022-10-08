@@ -4,6 +4,10 @@ class CommentInitState extends CommentStates {}
 
 class GetCommentsSuccess extends CommentInitState {}
 
+class SendCommentLoading extends CommentInitState {}
+
+class SendCommentSuccess extends CommentInitState {}
+
 class GalleryFileSelected extends CommentStates {}
 
 class GalleryImageShown extends CommentStates {}

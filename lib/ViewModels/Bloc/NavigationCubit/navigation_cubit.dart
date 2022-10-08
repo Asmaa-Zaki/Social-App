@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/ViewModels/Bloc/NavigationCubit/navigation_states.dart';
+import 'package:social_app/ViewModels/Bloc/NotificationCubit/notification_cubit.dart';
+import 'package:social_app/Views/NotificationScreen/notification_screen.dart';
 
 import '../../../Views/HomeScreen/home_screen.dart';
 import '../../../Views/ProfileScreen/profile_screen.dart';
@@ -14,26 +16,22 @@ class NavigationCubit extends Cubit<NavigationState> {
 
   List<Widget> screens = [
     const HomeScreen(),
-    //const ChatsScreen(),
-    //const PostsScreen(),
-    //const UsersScreen(),
+    const NotificationScreen(),
     const SettingsScreen(),
   ];
 
-  List<BottomNavigationBarItem> items = const [
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-    //BottomNavigationBarItem(icon: Icon(Icons.chat), label: "Chats"),
-    // BottomNavigationBarItem(icon: Icon(Icons.add), label: "Posts"),
-    //BottomNavigationBarItem(icon: Icon(Icons.person), label: "Users"),
-    BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Settings"),
-  ];
+  static bool newNotifications = false;
+  changeNotificationState(bool state) {
+    newNotifications = state;
+    emit(ChangeNotificationState());
+  }
 
   changeIndex(int current, BuildContext context) {
-    /*if (current == 1) {
-     // buildPush(context, const PostsScreen());
-    } else {*/
     currentIndex = current;
-    // }
+    if (currentIndex == 1) {
+      changeNotificationState(false);
+      NotificationCubit.get(context).updateAllNotifications();
+    }
     emit(NavigationChange());
   }
 }

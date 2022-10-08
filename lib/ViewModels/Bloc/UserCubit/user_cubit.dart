@@ -85,6 +85,41 @@ class UserCubit extends Cubit<UserStates> {
     });
   }
 
+  addDeviceInfo() {
+    FirebaseFirestore.instance
+        .collection("DeviceInfo")
+        .doc(uId)
+        .collection("Devices")
+        .doc(deviceToken)
+        .set({deviceToken!: "active"});
+  }
+
+  updateDeviceInfo() {
+    FirebaseFirestore.instance
+        .collection("DeviceInfo")
+        .doc(uId)
+        .collection("Devices")
+        .doc(deviceToken)
+        .update({deviceToken!: "notActive"});
+  }
+
+  List<String> activeDevices = [];
+  getActiveDevices(String userId) {
+    activeDevices.clear();
+    FirebaseFirestore.instance
+        .collection("DeviceInfo")
+        .doc(userId)
+        .collection("Devices")
+        .get()
+        .then((value) {
+      for (var element in value.docs) {
+        if (element.data()[element.id] == "active") {
+          activeDevices.add(element.id);
+        }
+      }
+    });
+  }
+
   void signIn({@required email, @required password}) {
     emit(UserLoginLoadingState());
     FirebaseAuth.instance
@@ -92,6 +127,7 @@ class UserCubit extends Cubit<UserStates> {
         .then((value) {
       uId = value.user?.uid;
       getUsers();
+      addDeviceInfo();
       getUser();
       emit(UserLoginSuccessState());
     }).catchError((err) {
@@ -146,10 +182,7 @@ class UserCubit extends Cubit<UserStates> {
   UserModel? userWithId;
   List<UserModel> allUsers = [];
   UserModel? getUserWithId(String uId) {
-    for (var element in users) {
-      allUsers.add(element);
-    }
-
+    allUsers = List.of(users);
     allUsers.add(user!);
     for (var element in allUsers) {
       if (element.uId == uId) {
@@ -157,6 +190,20 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
     return userWithId;
+  }
+
+  List<UserModel> usersWithId = [];
+  List<UserModel>? getUsersWithId(List<dynamic> uIds) {
+    allUsers = List.of(users);
+    usersWithId.clear();
+    for (var uIdElement in uIds) {
+      for (var element in allUsers) {
+        if (element.uId == uIdElement) {
+          usersWithId.add(element);
+        }
+      }
+    }
+    return usersWithId;
   }
 
   bool showUpdateButton = false;
@@ -305,15 +352,16 @@ class UserCubit extends Cubit<UserStates> {
 
   void logOut() {
     FirebaseAuth.instance.signOut().then((value) {
+      updateDeviceInfo();
       emit(UserLogoutSuccessState());
     });
   }
 
-  List<UserModel> likesUsers = [];
+  Set<UserModel> likesUsers = {};
   getPostLikesUsers(List<String> usersId) {
-    likesUsers = [];
-    for (var uElement in users) {
-      for (var element in usersId) {
+    likesUsers = {};
+    for (var element in usersId) {
+      for (var uElement in users) {
         if (uElement.uId == element) {
           likesUsers.add(uElement);
         } else if (uId == element) {
@@ -327,18 +375,20 @@ class UserCubit extends Cubit<UserStates> {
   void usersWithoutFriends(List<String> friends) {
     usersWithoutFriendsList.clear();
     if (friends.isEmpty) {
-      for (var element in users) {
-        usersWithoutFriendsList.add(element);
-        emit(GetUsersWithoutFriends());
-      }
+      usersWithoutFriendsList = List.of(users);
+      emit(GetUsersWithoutFriends());
+    } else if (friends.length == users.length) {
+      emit(GetUsersWithoutFriends());
     } else {
-      for (var element in users) {
-        for (var fElement in friends) {
+      for (var fElement in friends) {
+        for (var element in users) {
           if (element.uId != fElement) {
             usersWithoutFriendsList.add(element);
+            if (fElement == friends.last) {
+              emit(GetUsersWithoutFriends());
+            }
           }
         }
-        emit(GetUsersWithoutFriends());
       }
     }
   }

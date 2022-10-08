@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/ViewModels/Bloc/FriendBloc/friend_states.dart';
+import 'package:social_app/ViewModels/Bloc/UserCubit/user_cubit.dart';
+import 'package:social_app/ViewModels/Components/components.dart';
 import 'package:social_app/ViewModels/Constants/constants.dart';
+
+import 'friend_states.dart';
 
 class FriendCubit extends Cubit<FriendStates> {
   FriendCubit() : super(FriendInitState());
@@ -11,11 +14,19 @@ class FriendCubit extends Cubit<FriendStates> {
 
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  void addFriend(String userId) {
+  void addFriend(String userId, BuildContext context) {
+    UserCubit.get(context).getActiveDevices(userId);
     _addFriendInSent(userId).then((value) {
       _addFriendInReceive(userId).then((value) {
         emit(AddFriendSuccess());
         getAllFriendsDetails(false);
+        sendNotification(
+            context: context,
+            body:
+                "${UserCubit.get(context).getUserWithId(uId!)?.name} sent you a friend request",
+            title: "New Friend",
+            userId: userId,
+            screen: "usersScreen");
       });
     });
   }
@@ -72,9 +83,17 @@ class FriendCubit extends Cubit<FriendStates> {
   }
 
   void acceptFriend(String userId, BuildContext context) {
+    UserCubit.get(context).getActiveDevices(userId);
     addToMyFriendList(userId).then((value) {
       addToSenderFriendList(userId).then((value) {
         removeFriend(userId, true, false);
+        sendNotification(
+            context: context,
+            body:
+                "${UserCubit.get(context).getUserWithId(uId!)?.name} accepted your friend request",
+            title: "New Friend",
+            userId: userId,
+            screen: "chatsScreen");
       });
     });
   }

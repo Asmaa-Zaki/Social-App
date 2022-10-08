@@ -7,9 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_app/Models/PostModel/post_model.dart';
 import 'package:social_app/ViewModels/Bloc/CommentCubit/comment_states.dart';
+import 'package:social_app/ViewModels/Components/components.dart';
 
 import '../../../Models/CommentModel/comment_model.dart';
 import '../../Constants/constants.dart';
+import '../UserCubit/user_cubit.dart';
 
 class CommentCubit extends Cubit<CommentStates> {
   CommentCubit() : super(CommentInitState());
@@ -36,7 +38,7 @@ class CommentCubit extends Cubit<CommentStates> {
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  Future addCommentWithImage() {
+  Future addCommentWithImage({required BuildContext context}) {
     String comment = commentController.text;
     commentController.clear();
     return _firebaseStorage
@@ -45,15 +47,17 @@ class CommentCubit extends Cubit<CommentStates> {
         .putFile(commentImagePath!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-        addComment(image: value, comment: comment);
+        addComment(image: value, comment: comment, context: context);
       });
     });
   }
 
   final TextEditingController commentController = TextEditingController();
 
-  void addComment({String? image, required String comment}) {
+  void addComment(
+      {String? image, required String comment, required BuildContext context}) {
     commentController.clear();
+    UserCubit.get(context).getActiveDevices(currentPost.uId);
     CommentModel _commentModel = CommentModel(
         comment: comment.isEmpty ? null : comment,
         dateTime: DateTime.now().toString(),
@@ -64,14 +68,32 @@ class CommentCubit extends Cubit<CommentStates> {
         .collection("Comments")
         .doc(currentPost.postId)
         .collection("Comments")
-        .add(_commentModel.toMap());
+        .add(_commentModel.toMap())
+        .then((value) {
+      if (uId != currentPost.uId) {
+        sendNotification(
+            context: context,
+            body: "${UserCubit.get(context).user!.name} comments on your post",
+            title: "Post Updates",
+            userId: currentPost.uId,
+            postId: currentPost.postId,
+            screen: 'postScreen');
+        addNotificationToFirebase(
+            currentPost.uId, "comments on your post", uId!);
+      }
+      if (image != null) {
+        CommentCubit.get(context).commentImagePath = null;
+        Navigator.pop(context);
+      }
+    });
   }
 
-  void postComment() {
+  void postComment(BuildContext context) {
+    emit(SendCommentLoading());
     if (commentImagePath != null) {
-      addCommentWithImage();
+      addCommentWithImage(context: context);
     } else {
-      addComment(comment: commentController.text);
+      addComment(comment: commentController.text, context: context);
     }
   }
 

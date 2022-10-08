@@ -25,6 +25,7 @@ class ShowImageSelected extends StatelessWidget {
               IconButton(
                   onPressed: () {
                     CommentCubit.get(context).commentController.clear();
+                    CommentCubit.get(context).commentImagePath = null;
                     CommentCubit.get(context).changeMessageIcon();
                     Navigator.pop(context);
                   },

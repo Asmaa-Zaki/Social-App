@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:social_app/Models/CommentModel/comment_model.dart';
 import 'package:social_app/Models/UserModel/user_model.dart';
 import 'package:social_app/ViewModels/Bloc/UserCubit/user_cubit.dart';
@@ -13,6 +14,7 @@ class BuildComment extends StatelessWidget {
   const BuildComment({Key? key, required this.commentModel}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    bool rtl = intl.Bidi.detectRtlDirectionality(commentModel.comment ?? '');
     UserModel commentOwner =
         UserCubit.get(context).getUserWithId(commentModel.commentOwner)!;
     return Padding(
@@ -37,7 +39,9 @@ class BuildComment extends StatelessWidget {
                       color: firstDefaultColor.withOpacity(.3),
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: rtl
+                          ? CrossAxisAlignment.end
+                          : CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(bottom: 5.0),
@@ -50,12 +54,18 @@ class BuildComment extends StatelessWidget {
                         if (commentModel.comment != null)
                           Text(
                             commentModel.comment!,
+                            textDirection:
+                                rtl ? TextDirection.rtl : TextDirection.ltr,
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .textTheme
                                     .subtitle1
                                     ?.color
                                     ?.withOpacity(.8)),
+                          ),
+                        if (commentModel.image != null)
+                          const SizedBox(
+                            height: 5,
                           ),
                         if (commentModel.image != null)
                           InkWell(

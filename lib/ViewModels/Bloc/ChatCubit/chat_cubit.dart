@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_app/Models/MessageModel/message_model.dart';
+import 'package:social_app/Models/UserModel/user_model.dart';
+import 'package:social_app/ViewModels/Components/components.dart';
 
 import '../../Constants/constants.dart';
+import '../UserCubit/user_cubit.dart';
 import 'chat_states.dart';
 
 class ChatCubit extends Cubit<ChatStates> {
@@ -38,7 +41,6 @@ class ChatCubit extends Cubit<ChatStates> {
   }
 
   Future addMessageToSender(MessageModel messageModel, String receiverId) {
-    emit(MessageSendSuccess());
     return _firebaseFirestore
         .collection("Chats")
         .doc(uId! + receiverId)
@@ -54,10 +56,12 @@ class ChatCubit extends Cubit<ChatStates> {
         .add(messageModel.toMap());
   }
 
+  late UserModel receiverUser;
   addMessageToFireBase({
     String? message,
     required String receiverId,
     required String dateTime,
+    required BuildContext context,
     String? image,
   }) {
     MessageModel messageModel = MessageModel(
@@ -68,6 +72,16 @@ class ChatCubit extends Cubit<ChatStates> {
         image: image);
     addMessageToSender(messageModel, receiverId).then((value) {
       addMessageToReceiver(messageModel, receiverId).then((value) {
+        sendNotification(
+            context: context,
+            body: image == null ? message! : "new image",
+            title: receiverUser.name,
+            userId: receiverId,
+            screen: 'chatsScreen',
+            friendId: uId);
+        if (image != null) {
+          Navigator.pop(context);
+        }
         emit(MessageSendSuccess());
       }).catchError((err) {
         emit(MessageSendError());
@@ -81,19 +95,25 @@ class ChatCubit extends Cubit<ChatStates> {
     String? message,
     required String receiverId,
     required String dateTime,
+    required BuildContext context,
   }) {
-    emit(MessageSendSuccess());
+    emit(MessageSendingLoading());
+    UserCubit.get(context).getActiveDevices(receiverId);
     if (chatImage != null) {
       uploadPostImage(receiverId).then((value) {
         addMessageToFireBase(
             message: message,
             receiverId: receiverId,
             dateTime: dateTime,
-            image: value);
+            image: value,
+            context: context);
       });
     } else {
       addMessageToFireBase(
-          message: message, receiverId: receiverId, dateTime: dateTime);
+          message: message,
+          receiverId: receiverId,
+          dateTime: dateTime,
+          context: context);
     }
     chatImage = null;
   }

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_persistent_keyboard_height/flutter_persistent_keyboard_height.dart';
 import 'package:social_app/Models/UserModel/user_model.dart';
-import 'package:social_app/ViewModels/Bloc/FriendBloc/friend_cubit.dart';
-import 'package:social_app/ViewModels/Bloc/FriendBloc/friend_states.dart';
+import 'package:social_app/ViewModels/Bloc/ChatCubit/chat_cubit.dart';
+import 'package:social_app/ViewModels/Bloc/FriendCubit/friend_cubit.dart';
+import 'package:social_app/ViewModels/Bloc/FriendCubit/friend_states.dart';
 import 'package:social_app/ViewModels/Bloc/UserCubit/user_states.dart';
 import 'package:social_app/ViewModels/Components/components.dart';
 
@@ -28,6 +29,8 @@ class FriendsUsers extends StatelessWidget {
                           padding: const EdgeInsets.all(15.0),
                           child: InkWell(
                             onTap: () {
+                              ChatCubit.get(context).receiverUser =
+                                  users[index];
                               buildPush(
                                   context,
                                   PersistentKeyboardHeightProvider(

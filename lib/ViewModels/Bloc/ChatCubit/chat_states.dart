@@ -6,6 +6,8 @@ class GetChatLoading extends ChatStates {}
 
 class GetChatSuccess extends ChatStates {}
 
+class MessageSendingLoading extends ChatStates {}
+
 class MessageSendSuccess extends ChatStates {}
 
 class MessageSendError extends ChatStates {}

@@ -32,7 +32,7 @@ class TopCurves extends StatelessWidget {
             child: Text(
               headerText,
               style: TextStyle(
-                  color: secondDefaultColor,
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
                   fontSize: 30,
                   fontWeight: FontWeight.bold),
             ),

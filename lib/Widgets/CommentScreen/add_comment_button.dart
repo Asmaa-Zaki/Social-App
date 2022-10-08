@@ -19,22 +19,22 @@ class AddCommentButton extends StatelessWidget {
             shape: BoxShape.circle,
             color: Colors.blueGrey[900],
           ),
-          child: IconButton(
-            disabledColor: Colors.grey.shade500,
-            padding: EdgeInsets.zero,
-            icon: const Icon(Icons.send),
-            onPressed: commentController.text.isNotEmpty ||
-                    CommentCubit.get(context).commentImagePath != null
-                ? () {
-                    CommentCubit.get(context).postComment();
-                    CommentCubit.get(context).changeKeyboardState(false);
-                    if (CommentCubit.get(context).commentImagePath != null) {
-                      CommentCubit.get(context).commentImagePath = null;
-                      Navigator.pop(context);
-                    }
-                  }
-                : null,
-          ),
+          child: state is! SendCommentLoading
+              ? IconButton(
+                  disabledColor: Colors.grey.shade500,
+                  padding: EdgeInsets.zero,
+                  color: Colors.white,
+                  icon: const Icon(
+                    Icons.send,
+                  ),
+                  onPressed: commentController.text.isNotEmpty ||
+                          CommentCubit.get(context).commentImagePath != null
+                      ? () {
+                          CommentCubit.get(context).postComment(context);
+                        }
+                      : null,
+                )
+              : const CircularProgressIndicator(),
         );
       },
     );
